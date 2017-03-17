@@ -8,15 +8,22 @@ declerationblock: selector DECLERATIONBLOCK_OPEN decleration* DECLERATIONBLOCK_C
 
 selector: ((SELECTOR_ELEEMNT | SELECTOR_ID) | SELECTOR_CLASS);
 
-decleration: attribute ATTRIBUTE_VALUE_SEPERATOR (value | constant) LINEEND;
+decleration: attribute ATTRIBUTE_VALUE_SEPERATOR calculatedvalue LINEEND;
 
 attribute: ATTRIBUTE_COLOR | ATTRIBUTE_BACKGROUND_COLOR | ATTRIBUTE_WIDTH | ATTRIBUTE_HEIGHT;
 
-value: VALUE_COLOR | VALUE_PIXELS | VALUE_PERCENTAGE;
+value: datavalue | constant;
+
+datavalue: VALUE_COLOR | VALUE_PIXELS | VALUE_PERCENTAGE;
+
+calculatedvalue: value moreCalculatedValues;
+moreCalculatedValues: | calcoperator calculatedvalue moreCalculatedValues;
+
+calcoperator: CALCOPERATOR_ADD | CALCOPERATOR_SUB | CALCOPERATOR_MUL | CALCOPERATOR_DEV;
 
 constant: CONSTANT_NAME;
 
-constantassignment: constant CONSTANT_ASSIGNMENT_SEPERATOR (value | constant) LINEEND;
+constantassignment: constant CONSTANT_ASSIGNMENT_SEPERATOR calculatedvalue LINEEND;
 
 WS: [ \t\r\n]+ -> skip;
 
@@ -42,3 +49,8 @@ SELECTOR_ELEEMNT: [a-zA-Z]+;
 
 CONSTANT_NAME: '$'[a-zA-Z0-9]+;
 CONSTANT_ASSIGNMENT_SEPERATOR: '=';
+
+CALCOPERATOR_ADD: '+';
+CALCOPERATOR_SUB: '-';
+CALCOPERATOR_MUL: '*';
+CALCOPERATOR_DEV: '/';
