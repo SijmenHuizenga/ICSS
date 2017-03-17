@@ -10,7 +10,7 @@ Eenvoudige opmaak
 ICSS gebruikt net als CSS regels om de opmaak van HTML elementen aan te geven. Een stylesheet bestaat uit een aantal regels die na elkaar worden toegepast op een HTML document. Regels hebben de vorm ``<selector> { <declaraties> }``. Hierin is de selector ofwel een speci?ek type tag geselecteerd kan worden, ofwel een element met een unieke id, ofwel elementen van een bepaalde class. Elementen met een uniek id worden aangegeven door identi?er beginnend met een hekje (``#``) en elementen in een klass worden aangegeven door de klassenamen voorafgegaan door een punt (``.``). Declaraties zijn naam/waarde paren van de vorm ``<attribuutnaam>: <waarde>;``. Sommige waardes kunnen ook een eenheid bevatten zoals ``px`` of ``\%``. Hier volgen een aantal voorbeelden van eenvoudige ICSS regels:
 
 ```
-a {
+.a {
     color: #ff0000;
     background -color: #eeeeee;
 }
