@@ -1,0 +1,23 @@
+$linkcolor = #ff0000;
+$parwidth = 500px;
+
+p {
+	background-color: #ffffff;
+	width: $parwidth;
+
+	h1 {
+		width: $parwidth - 50px;
+		background-color: #eeeeee;
+	}
+}
+a {
+	color: $linkcolor;
+}
+
+#menu {
+	width: $parwidth + 20px;
+}
+
+.menu {
+	color: #000000;
+}
