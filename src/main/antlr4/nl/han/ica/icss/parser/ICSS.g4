@@ -4,10 +4,11 @@ stylesheet: stylesheetpart*;
 
 stylesheetpart: constantassignment | declerationblock;
 
-declerationblock: selector DECLERATIONBLOCK_OPEN decleration* DECLERATIONBLOCK_CLOSE;
+declerationblock: selector DECLERATIONBLOCK_OPEN declerationpart* DECLERATIONBLOCK_CLOSE;
 
 selector: ((SELECTOR_ELEEMNT | SELECTOR_ID) | SELECTOR_CLASS);
 
+declerationpart: decleration | declerationblock;
 decleration: attribute ATTRIBUTE_VALUE_SEPERATOR calculatedvalue LINEEND;
 
 attribute: ATTRIBUTE_COLOR | ATTRIBUTE_BACKGROUND_COLOR | ATTRIBUTE_WIDTH | ATTRIBUTE_HEIGHT;
@@ -16,8 +17,8 @@ value: datavalue | constant;
 
 datavalue: VALUE_COLOR | VALUE_PIXELS | VALUE_PERCENTAGE;
 
-calculatedvalue: value moreCalculatedValues;
-moreCalculatedValues: | calcoperator calculatedvalue moreCalculatedValues;
+calculatedvalue: value (|moreCalculatedValues);
+moreCalculatedValues: calcoperator calculatedvalue (|moreCalculatedValues);
 
 calcoperator: CALCOPERATOR_ADD | CALCOPERATOR_SUB | CALCOPERATOR_MUL | CALCOPERATOR_DEV;
 
