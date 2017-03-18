@@ -18,7 +18,7 @@ value: literal | constantreference;
 literal: LITERAL_COLOR | LITERAL_PIXELS | LITERAL_PERCENTAGE;
 
 calculatedvalue: value (|moreCalculatedValues);
-moreCalculatedValues: calcoperator calculatedvalue (|moreCalculatedValues);
+moreCalculatedValues: calcoperator calculatedvalue;
 
 calcoperator: CALCOPERATOR_ADD | CALCOPERATOR_SUB | CALCOPERATOR_MUL | CALCOPERATOR_DEV;
 

@@ -6,13 +6,18 @@ public class Operation extends Value {
 
     public Operator operator;
 
-    ;
     public Value lhs;
     public Value rhs;
 
+    public Operation(Value lhs, Operator operator, Value rhs) {
+        this.lhs = lhs;
+        this.operator = operator;
+        this.rhs = rhs;
+    }
+
     @Override
     public String getNodeLabel() {
-        return "Operation (" + operator.toString() + ")";
+        return "Operation("+lhs + " " + operator + " " + rhs + ")";
     }
 
     @Override
@@ -32,5 +37,7 @@ public class Operation extends Value {
         }
     }
 
-    public static enum Operator {PLUS, MIN}
+    public static enum Operator {
+        PLUS, MIN, MUL, DEV
+    }
 }

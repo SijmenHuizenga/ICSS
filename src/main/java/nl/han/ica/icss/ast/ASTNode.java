@@ -44,4 +44,9 @@ public class ASTNode {
     public boolean hasError() {
         return error != null;
     }
+
+    @Override
+    public String toString() {
+        return getNodeLabel();
+    }
 }

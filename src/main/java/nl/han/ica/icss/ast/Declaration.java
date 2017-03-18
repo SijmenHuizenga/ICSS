@@ -6,17 +6,17 @@ import java.util.ArrayList;
  * A Declaration defines a style property. Declarations are things like "width: 100px"
  */
 public class Declaration extends ASTNode {
+
     public String property;
     public Value value;
 
     @Override
     public String getNodeLabel() {
-        return "Declaration (" + property + ")";
+        return "Declaration(" + property + ":" + value + ")";
     }
 
     @Override
     public ArrayList<ASTNode> getChildren() {
-
         ArrayList<ASTNode> children = new ArrayList<>();
         children.add(value);
         return children;

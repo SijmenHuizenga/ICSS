@@ -10,7 +10,12 @@ public class Assignment extends ASTNode {
 
     @Override
     public String getNodeLabel() {
-        return "Assignment (" + name.name + ")";
+        return "Assignment(" + name  + " = " + value + ")";
+    }
+
+    @Override
+    public String toString() {
+        return getNodeLabel();
     }
 
     @Override

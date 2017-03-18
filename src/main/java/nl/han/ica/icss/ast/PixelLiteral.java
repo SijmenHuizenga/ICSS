@@ -1,6 +1,7 @@
 package nl.han.ica.icss.ast;
 
 public class PixelLiteral extends Literal {
+
     public int value;
 
     public PixelLiteral(int value) {
@@ -13,7 +14,7 @@ public class PixelLiteral extends Literal {
 
     @Override
     public String getNodeLabel() {
-        return "Pixel literal (" + value + ")";
+        return "PixelLiteral (" + value + ")";
     }
 
     @Override

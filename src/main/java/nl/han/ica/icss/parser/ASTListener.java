@@ -1,7 +1,6 @@
 package nl.han.ica.icss.parser;
 
 import nl.han.ica.icss.ast.AST;
-import nl.han.ica.icss.ast.Stylesheet;
 import nl.han.ica.icss.astfactory.ConstantReferenceFactory;
 import nl.han.ica.icss.astfactory.ValueFactory;
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -18,7 +17,7 @@ public class ASTListener extends ICSSBaseListener {
     }
 
     public AST getAST() {
-        System.out.println(ast.symboltable);
+        System.out.println(ast);
         return ast;
     }
 
@@ -86,7 +85,7 @@ public class ASTListener extends ICSSBaseListener {
     public void exitConstantassignment(ICSSParser.ConstantassignmentContext ctx) {
         //todo: throw error if constant is already defined
         ast.symboltable.put(
-                ConstantReferenceFactory.getConstantName((ICSSParser.ConstantreferenceContext) ctx.getChild(0)),
-                ValueFactory.getValue((ICSSParser.CalculatedvalueContext) ctx.getChild(2)));
+                ConstantReferenceFactory.getConstantName(ctx.constantreference()),
+                ValueFactory.make(ctx.calculatedvalue()));
     }
 }

@@ -48,4 +48,12 @@ public class AST {
             collectErrors(errors, child);
         }
     }
+
+    @Override
+    public String toString() {
+        return "AST{" +
+                "root=" + root +
+                ", symboltable=" + symboltable +
+                '}';
+    }
 }

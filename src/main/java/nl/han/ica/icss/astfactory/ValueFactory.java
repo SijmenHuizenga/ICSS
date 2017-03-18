@@ -1,6 +1,8 @@
 package nl.han.ica.icss.astfactory;
 
+import nl.han.ica.icss.ast.Operation;
 import nl.han.ica.icss.ast.Value;
+import nl.han.ica.icss.parser.ICSSParser;
 import nl.han.ica.icss.parser.ICSSParser.*;
 
 /**
@@ -8,21 +10,40 @@ import nl.han.ica.icss.parser.ICSSParser.*;
  */
 public class ValueFactory {
 
-    public static Value getValue(CalculatedvalueContext calculatedValue) {
+    public static Value make(CalculatedvalueContext calculatedValue) {
         ValueContext actualValue = calculatedValue.value();
         if(actualValue == null)
             throw new IllegalStateException("Value null. This is impossible!");
 
-        MoreCalculatedValuesContext moreCalculatedValuesContext = calculatedValue.moreCalculatedValues();
-        if(moreCalculatedValuesContext == null)
-            return getValue(actualValue);
+        MoreCalculatedValuesContext moreCalcs = calculatedValue.moreCalculatedValues();
 
-        //todo: next implement calculations
+        if(moreCalcs == null)
+            return make(actualValue);
 
-        return null;
+        return make(actualValue, moreCalcs);
     }
 
-    private static Value getValue(ValueContext value) {
+    private static Value make(ValueContext left, MoreCalculatedValuesContext right) {
+        return new Operation(
+                make(left),
+                getOperator(right.calcoperator()),
+                make(right.calculatedvalue())
+        );
+    }
+
+    private static Operation.Operator getOperator(CalcoperatorContext calcoperator) {
+        if(calcoperator.CALCOPERATOR_ADD() != null)
+            return Operation.Operator.PLUS;
+        else if(calcoperator.CALCOPERATOR_SUB() != null)
+            return Operation.Operator.MIN;
+        else if(calcoperator.CALCOPERATOR_DEV() != null)
+            return Operation.Operator.DEV;
+        else if(calcoperator.CALCOPERATOR_MUL() != null)
+            return Operation.Operator.MUL;
+        throw new IllegalArgumentException("PLUS, MIN, DEV and MUL are all null. This is impssible.");
+    }
+
+    private static Value make(ValueContext value) {
         if(value.literal() != null)
             return LiteralFactory.make(value.literal());
         else if(value.constantreference() != null)

@@ -7,11 +7,11 @@ public class Selector extends ASTNode {
 
     @Override
     public String getNodeLabel() {
-        return "Selector";
+        return "Selector(" + getSelector() + ")";
     }
 
-    @Override
-    public String toString() {
+
+    public String getSelector() {
         if (tag != null)
             return tag;
         else if (cls != null)

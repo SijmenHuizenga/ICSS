@@ -14,7 +14,7 @@ public class Stylerule extends ASTNode {
 
     @Override
     public String getNodeLabel() {
-        return "Stylerule (" + selector + ")";
+        return "Stylerule(" + selector + ")";
     }
 
     @Override
@@ -25,5 +25,15 @@ public class Stylerule extends ASTNode {
     @Override
     public void addChild(ASTNode child) {
         body.add(child);
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("Stylerule(").append(selector);
+        for(ASTNode node : body)
+            builder.append(System.lineSeparator()).append(node);
+        builder.append(")");
+        return builder.toString();
     }
 }

@@ -1,6 +1,7 @@
 package nl.han.ica.icss.ast;
 
 public class ColorLiteral extends Literal {
+
     public String value;
 
     public ColorLiteral(String value) {
@@ -9,11 +10,7 @@ public class ColorLiteral extends Literal {
 
     @Override
     public String getNodeLabel() {
-        return "Color literal (" + value + ")";
+        return "Colorliteral(" + value + ")";
     }
 
-    @Override
-    public String toString() {
-        return getNodeLabel();
-    }
 }
