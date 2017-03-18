@@ -13,4 +13,15 @@ public class ConstantReference extends Value {
     public String getNodeLabel() {
         return "ConstantReference(" + name + ")";
     }
+
+    @Override
+    public void check() {
+        //todo: CH01
+    }
+
+    @Override
+    public Type getType() {
+        //todo
+        return null;
+    }
 }

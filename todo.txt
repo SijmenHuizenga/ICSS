@@ -1,1 +1,3 @@
 * navragen licentie han code
+* CH01 en CH02 implementeren in Checker?! Data te kort!
+* kleuren optellen?

@@ -11,6 +11,11 @@ public class Selector extends ASTNode {
         return "Selector(" + getSelector() + ")";
     }
 
+    @Override
+    public void check() {
+        if(tag == null && cls == null && id == null)
+            setError("TAG, CLASS and ID are all null. This should be impossible!");
+    }
 
     public String getSelector() {
         if (tag != null)

@@ -13,7 +13,7 @@ public class Checker {
         //Clear
         symboltable = new HashMap<>();
 
-        //DO THE CHECKING HERE...
+        ast.root.check();
 
         //Save the symboltable.
         ast.symboltable = symboltable;
@@ -21,12 +21,5 @@ public class Checker {
         if (ast.getErrors().isEmpty()) {
             ast.checked = true;
         }
-    }
-
-    public enum ValueType {
-        PIXELVALUE,
-        PERCENTAGE,
-        COLORVALUE,
-        UNDEFINED
     }
 }

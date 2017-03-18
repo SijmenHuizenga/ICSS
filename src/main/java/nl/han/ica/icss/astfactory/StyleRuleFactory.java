@@ -1,10 +1,6 @@
 package nl.han.ica.icss.astfactory;
 
-import nl.han.ica.icss.ast.ASTNode;
-import nl.han.ica.icss.ast.Declaration;
-import nl.han.ica.icss.ast.Selector;
-import nl.han.ica.icss.ast.Stylerule;
-import nl.han.ica.icss.parser.ICSSParser;
+import nl.han.ica.icss.ast.*;
 import nl.han.ica.icss.parser.ICSSParser.*;
 
 import java.util.ArrayList;
@@ -50,8 +46,16 @@ public class StyleRuleFactory {
                 valueFactory.make(decleration.calculatedvalue()));
     }
 
-    private String make(AttributeContext attribute) {
-        return attribute.getText();
+    private Declaration.Type make(AttributeContext attribute) {
+        if(attribute.ATTRIBUTE_BACKGROUND_COLOR() != null)
+            return Declaration.Type.BACKGROUND_COLOR;
+        if(attribute.ATTRIBUTE_COLOR() != null)
+            return Declaration.Type.COLOR;
+        if(attribute.ATTRIBUTE_HEIGHT() != null)
+            return Declaration.Type.HEIGHT;
+        if(attribute.ATTRIBUTE_WIDTH() != null)
+            return Declaration.Type.WIDTH;
+        throw new IllegalArgumentException("unknown attribte type");
     }
 
     private Selector make(SelectorContext selector) {

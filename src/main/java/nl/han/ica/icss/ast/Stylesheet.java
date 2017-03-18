@@ -41,4 +41,8 @@ public class Stylesheet extends ASTNode {
         builder.append(")");
         return builder.toString();
     }
+
+    public void check() {
+        body.forEach(ASTNode::check);
+    }
 }

@@ -19,7 +19,14 @@ public class Assignment extends ASTNode {
     }
 
     @Override
+    public void check() {
+        //todo: CH02
+    }
+
+    @Override
     public void addChild(ASTNode child) {
         value = (Value) child;
     }
+
+
 }

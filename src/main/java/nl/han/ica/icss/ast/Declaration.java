@@ -7,10 +7,10 @@ import java.util.ArrayList;
  */
 public class Declaration extends ASTNode {
 
-    public String property;
+    public Type property;
     public Value value;
 
-    public Declaration(String property, Value value) {
+    public Declaration(Type property, Value value) {
         this.property = property;
         this.value = value;
     }
@@ -33,7 +33,35 @@ public class Declaration extends ASTNode {
     }
 
     @Override
+    public void check() {
+        //CH04
+        if(!property.accepts(value.getType()))
+            setError("Property " + property + " does not accept valuetype " + value.getType());
+    }
+
+    @Override
     public void addChild(ASTNode child) {
         value = (Value) child;
+    }
+
+    public static enum Type {
+
+        COLOR(Value.Type.COLOR),
+        BACKGROUND_COLOR(Value.Type.COLOR),
+        WIDTH(Value.Type.PERCENTAGE, Value.Type.PIXEL),
+        HEIGHT(Value.Type.PERCENTAGE, Value.Type.PIXEL);
+
+        private Value.Type[] acceptedtypes;
+
+        Type(Value.Type... acceptedtypes) {
+            this.acceptedtypes = acceptedtypes;
+        }
+
+        public boolean accepts(Value.Type type) {
+            for(Value.Type accepted : acceptedtypes)
+                if(type == accepted)
+                    return true;
+            return false;
+        }
     }
 }

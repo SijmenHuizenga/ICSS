@@ -4,7 +4,7 @@ import nl.han.ica.icss.checker.SemanticError;
 
 import java.util.ArrayList;
 
-public class ASTNode {
+public abstract class ASTNode {
 
     private SemanticError error = null;
 
@@ -49,4 +49,6 @@ public class ASTNode {
     public String toString() {
         return getNodeLabel();
     }
+
+    public abstract void check();
 }

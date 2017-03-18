@@ -36,4 +36,10 @@ public class Stylerule extends ASTNode {
         builder.append(")");
         return builder.toString();
     }
+
+    @Override
+    public void check() {
+        selector.check();
+        body.forEach(ASTNode::check);
+    }
 }

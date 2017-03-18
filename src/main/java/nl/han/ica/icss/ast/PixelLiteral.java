@@ -21,4 +21,15 @@ public class PixelLiteral extends Literal {
     public String toString() {
         return getNodeLabel();
     }
+
+    @Override
+    public void check() {
+        if(value < 0)
+            setError("Pixel value cannot be smaller than 0");
+    }
+
+    @Override
+    public Type getType() {
+        return Type.PIXEL;
+    }
 }

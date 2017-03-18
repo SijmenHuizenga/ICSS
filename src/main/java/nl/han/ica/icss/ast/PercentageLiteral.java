@@ -15,4 +15,15 @@ public class PercentageLiteral extends Literal {
     public String getNodeLabel() {
         return "PercentageLiteral (" + value + ")";
     }
+
+    @Override
+    public void check() {
+        if(value < 0)
+            setError("Percentage cannot be smaller than 0");
+    }
+
+    @Override
+    public Type getType() {
+        return Type.PERCENTAGE;
+    }
 }

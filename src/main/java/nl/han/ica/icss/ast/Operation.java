@@ -37,6 +37,20 @@ public class Operation extends Value {
         }
     }
 
+    @Override
+    public void check() {
+        //CH03
+        if(lhs.getType() != rhs.getType() || lhs.getType() == Type.MIXED)
+            setError("Operation left type does not equal the right type.");
+    }
+
+    @Override
+    public Type getType() {
+        if(lhs.getType() != rhs.getType())
+            return Type.MIXED;
+        return lhs.getType();
+    }
+
     public static enum Operator {
         PLUS, MIN, MUL, DEV
     }
