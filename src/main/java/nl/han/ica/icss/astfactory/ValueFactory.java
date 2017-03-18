@@ -10,7 +10,16 @@ import nl.han.ica.icss.parser.ICSSParser.*;
  */
 public class ValueFactory {
 
-    public static Value make(CalculatedvalueContext calculatedValue) {
+    private final LiteralFactory literalFactory;
+    private final ConstantReferenceFactory constantReferenceFactory;
+
+    public ValueFactory(LiteralFactory literalFactory, ConstantReferenceFactory constantReferenceFactory) {
+        this.literalFactory = literalFactory;
+
+        this.constantReferenceFactory = constantReferenceFactory;
+    }
+
+    public Value make(CalculatedvalueContext calculatedValue) {
         ValueContext actualValue = calculatedValue.value();
         if(actualValue == null)
             throw new IllegalStateException("Value null. This is impossible!");
@@ -23,7 +32,7 @@ public class ValueFactory {
         return make(actualValue, moreCalcs);
     }
 
-    private static Value make(ValueContext left, MoreCalculatedValuesContext right) {
+    private Value make(ValueContext left, MoreCalculatedValuesContext right) {
         return new Operation(
                 make(left),
                 getOperator(right.calcoperator()),
@@ -31,7 +40,7 @@ public class ValueFactory {
         );
     }
 
-    private static Operation.Operator getOperator(CalcoperatorContext calcoperator) {
+    private Operation.Operator getOperator(CalcoperatorContext calcoperator) {
         if(calcoperator.CALCOPERATOR_ADD() != null)
             return Operation.Operator.PLUS;
         else if(calcoperator.CALCOPERATOR_SUB() != null)
@@ -43,11 +52,11 @@ public class ValueFactory {
         throw new IllegalArgumentException("PLUS, MIN, DEV and MUL are all null. This is impssible.");
     }
 
-    private static Value make(ValueContext value) {
+    private Value make(ValueContext value) {
         if(value.literal() != null)
-            return LiteralFactory.make(value.literal());
+            return literalFactory.make(value.literal());
         else if(value.constantreference() != null)
-            return ConstantReferenceFactory.make(value.constantreference());
+            return constantReferenceFactory.make(value.constantreference());
         else
             throw new IllegalStateException("ConstantReference AND literal ARE null. This is impossible!");
     }

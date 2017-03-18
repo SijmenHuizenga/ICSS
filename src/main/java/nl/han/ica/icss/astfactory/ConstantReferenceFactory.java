@@ -9,11 +9,13 @@ import nl.han.ica.icss.parser.ICSSParser;
  */
 public class ConstantReferenceFactory {
 
-    public static String getConstantName(ICSSParser.ConstantreferenceContext constant) {
+    public String getConstantName(ICSSParser.ConstantreferenceContext constant) {
         return constant.getText().substring(1);
     }
 
-    public static Value make(ICSSParser.ConstantreferenceContext constantreference) {
-        return new ConstantReference(getConstantName(constantreference));
+    public Value make(ICSSParser.ConstantreferenceContext constantreference) {
+        String constantName = getConstantName(constantreference);
+
+        return new ConstantReference(constantName);
     }
 }
