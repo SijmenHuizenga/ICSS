@@ -7,9 +7,9 @@ public class Stylerule extends ASTNode {
     public Selector selector;
     public ArrayList<ASTNode> body;
 
-    public Stylerule() {
-        selector = new Selector();
-        body = new ArrayList<>();
+    public Stylerule(Selector selector, ArrayList<ASTNode> body) {
+        this.selector = selector;
+        this.body = body;
     }
 
     @Override

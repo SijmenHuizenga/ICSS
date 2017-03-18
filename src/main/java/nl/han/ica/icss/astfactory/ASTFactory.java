@@ -15,6 +15,7 @@ public class ASTFactory {
 
     ValueFactory valueFactory = new ValueFactory(literalFactory, constantReferenceFactory);
 
+    StyleRuleFactory styleRuleFactory = new StyleRuleFactory(valueFactory);
 
     public void addConstantDecleration(ICSSParser.ConstantassignmentContext ctx){
         String constantName = constantReferenceFactory.getConstantName(ctx.constantreference());
@@ -29,5 +30,9 @@ public class ASTFactory {
 
     public AST getAst() {
         return ast;
+    }
+
+    public void addStyleRule(ICSSParser.StyleruleContext ctx) {
+        ast.root.addChild(styleRuleFactory.make(ctx));
     }
 }

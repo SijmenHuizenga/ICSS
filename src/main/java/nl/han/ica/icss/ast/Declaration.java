@@ -10,9 +10,14 @@ public class Declaration extends ASTNode {
     public String property;
     public Value value;
 
+    public Declaration(String property, Value value) {
+        this.property = property;
+        this.value = value;
+    }
+
     @Override
     public String getNodeLabel() {
-        return "Declaration(" + property + ":" + value + ")";
+        return "Declaration(" + property + ")";
     }
 
     @Override
@@ -20,6 +25,11 @@ public class Declaration extends ASTNode {
         ArrayList<ASTNode> children = new ArrayList<>();
         children.add(value);
         return children;
+    }
+
+    @Override
+    public String toString() {
+        return "Declaration(" + property + ":" + value + ")";
     }
 
     @Override
