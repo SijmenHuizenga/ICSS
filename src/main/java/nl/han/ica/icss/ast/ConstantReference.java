@@ -15,7 +15,7 @@ public class ConstantReference extends Value {
 
     @Override
     public String getNodeLabel() {
-        return "ConstantReference(" + name + hashCode()+  ")";
+        return "ConstantReference(" + name + ")";
     }
 
     @Override

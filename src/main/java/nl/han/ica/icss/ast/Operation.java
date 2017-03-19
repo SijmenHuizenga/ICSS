@@ -52,9 +52,9 @@ public class Operation extends Value {
         if(visitedNodes.contains(this))
             return Type.UNKNOWN;
         visitedNodes.add(this);
-        if(lhs.getType() != rhs.getType())
+        if(lhs.getType(visitedNodes) != rhs.getType(visitedNodes))
             return Type.MIXED;
-        return lhs.getType();
+        return lhs.getType(visitedNodes);
     }
 
     @Override
