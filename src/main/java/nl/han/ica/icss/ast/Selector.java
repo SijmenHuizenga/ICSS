@@ -21,9 +21,9 @@ public class Selector extends ASTNode {
         if (tag != null)
             return tag;
         else if (cls != null)
-            return cls;
+            return "."+cls;
         else
-            return id;
+            return "#"+id;
     }
 
     public Selector setClass(String cls) {

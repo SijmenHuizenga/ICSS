@@ -28,4 +28,9 @@ public class ASTListener extends ICSSBaseListener {
     public void exitConstantassignment(ICSSParser.ConstantassignmentContext ctx) {
         astFactory.addConstantDecleration(ctx);
     }
+
+    @Override
+    public void exitStylesheet(ICSSParser.StylesheetContext ctx) {
+        super.exitStylesheet(ctx);
+    }
 }

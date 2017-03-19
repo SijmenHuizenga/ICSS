@@ -2,7 +2,6 @@ package nl.han.ica.icss.astfactory;
 
 import nl.han.ica.icss.ast.Operation;
 import nl.han.ica.icss.ast.Value;
-import nl.han.ica.icss.parser.ICSSParser;
 import nl.han.ica.icss.parser.ICSSParser.*;
 
 /**
@@ -11,12 +10,12 @@ import nl.han.ica.icss.parser.ICSSParser.*;
 public class ValueFactory {
 
     private final LiteralFactory literalFactory;
-    private final ConstantReferenceFactory constantReferenceFactory;
+    private final ConstantFactory constantFactory;
 
-    public ValueFactory(LiteralFactory literalFactory, ConstantReferenceFactory constantReferenceFactory) {
+    public ValueFactory(LiteralFactory literalFactory, ConstantFactory constantFactory) {
         this.literalFactory = literalFactory;
 
-        this.constantReferenceFactory = constantReferenceFactory;
+        this.constantFactory = constantFactory;
     }
 
     public Value make(CalculatedvalueContext calculatedValue) {
@@ -56,7 +55,7 @@ public class ValueFactory {
         if(value.literal() != null)
             return literalFactory.make(value.literal());
         else if(value.constantreference() != null)
-            return constantReferenceFactory.make(value.constantreference());
+            return constantFactory.makeReference(value.constantreference());
         else
             throw new IllegalStateException("ConstantReference AND literal ARE null. This is impossible!");
     }

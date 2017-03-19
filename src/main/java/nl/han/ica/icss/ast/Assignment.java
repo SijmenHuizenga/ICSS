@@ -1,16 +1,23 @@
 package nl.han.ica.icss.ast;
 
+import java.util.ArrayList;
+
 /**
  * An assignment binds a value to an identifier.
  */
 public class Assignment extends ASTNode {
 
-    public ConstantReference name;
+    public ConstantReference key;
     public Value value;
+
+    public Assignment(ConstantReference key, Value value) {
+        this.key = key;
+        this.value = value;
+    }
 
     @Override
     public String getNodeLabel() {
-        return "Assignment(" + name  + " = " + value + ")";
+        return "Assignment(" + key.name  + " = " + value + ")";
     }
 
     @Override
@@ -20,7 +27,9 @@ public class Assignment extends ASTNode {
 
     @Override
     public void check() {
-        //todo: CH02
+        value.check();
+        if(value.containsReferenceTo(key))
+            setError("Circular Reference! Value contains a reference to this key. This is not allowed.");
     }
 
     @Override
@@ -28,5 +37,10 @@ public class Assignment extends ASTNode {
         value = (Value) child;
     }
 
-
+    @Override
+    public ArrayList<ASTNode> getChildren() {
+        ArrayList<ASTNode> astNodes = new ArrayList<>();
+        astNodes.add(value);
+        return astNodes;
+    }
 }

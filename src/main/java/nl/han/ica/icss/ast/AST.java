@@ -42,11 +42,12 @@ public class AST {
 
     private void collectErrors(ArrayList<SemanticError> errors, ASTNode node) {
         if (node.hasError()) {
+            if(errors.contains(node.getError()))
+                return;
             errors.add(node.getError());
         }
-        for (ASTNode child : node.getChildren()) {
+        for (ASTNode child : node.getChildren())
             collectErrors(errors, child);
-        }
     }
 
     @Override

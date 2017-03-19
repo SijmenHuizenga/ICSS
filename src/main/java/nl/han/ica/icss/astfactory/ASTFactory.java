@@ -1,6 +1,7 @@
 package nl.han.ica.icss.astfactory;
 
 import nl.han.ica.icss.ast.AST;
+import nl.han.ica.icss.ast.Value;
 import nl.han.ica.icss.parser.ICSSParser;
 
 /**
@@ -10,22 +11,16 @@ public class ASTFactory {
 
     AST ast = new AST();
 
-    ConstantReferenceFactory constantReferenceFactory = new ConstantReferenceFactory();
+    ConstantFactory constantFactory = new ConstantFactory();
     LiteralFactory literalFactory = new LiteralFactory();
 
-    ValueFactory valueFactory = new ValueFactory(literalFactory, constantReferenceFactory);
+    ValueFactory valueFactory = new ValueFactory(literalFactory, constantFactory);
 
     StyleRuleFactory styleRuleFactory = new StyleRuleFactory(valueFactory);
 
     public void addConstantDecleration(ICSSParser.ConstantassignmentContext ctx){
-        String constantName = constantReferenceFactory.getConstantName(ctx.constantreference());
-        if(ast.symboltable.containsKey(constantName))
-            throw new IllegalArgumentException("Je mag in ICSS een constante maar een keer defnieren.");
-
-        ast.symboltable.put(
-                constantName,
-                valueFactory.make(ctx.calculatedvalue())
-        );
+        Value value = valueFactory.make(ctx.calculatedvalue());
+        ast.root.addChild(constantFactory.makeAssignment(ctx.constantreference(), value));
     }
 
     public AST getAst() {

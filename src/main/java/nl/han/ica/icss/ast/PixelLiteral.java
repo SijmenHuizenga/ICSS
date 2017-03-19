@@ -1,5 +1,7 @@
 package nl.han.ica.icss.ast;
 
+import java.util.List;
+
 public class PixelLiteral extends Literal {
 
     public int value;
@@ -29,7 +31,7 @@ public class PixelLiteral extends Literal {
     }
 
     @Override
-    public Type getType() {
+    public Type getType(List<ASTNode> visited) {
         return Type.PIXEL;
     }
 }

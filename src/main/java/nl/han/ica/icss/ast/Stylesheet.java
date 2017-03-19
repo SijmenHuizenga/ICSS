@@ -1,6 +1,11 @@
 package nl.han.ica.icss.ast;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * A stylesheet is the root node of the AST, it consists of one or more statements

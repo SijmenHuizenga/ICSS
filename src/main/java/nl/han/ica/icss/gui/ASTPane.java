@@ -9,6 +9,10 @@ import javafx.scene.layout.BorderPane;
 import nl.han.ica.icss.ast.AST;
 import nl.han.ica.icss.ast.ASTNode;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
 public class ASTPane extends BorderPane {
 
     private TreeView<ASTNode> content;
@@ -40,7 +44,7 @@ public class ASTPane extends BorderPane {
 
         setTop(title);
         setCenter(content);
-        setMinWidth(200);
+        setMinWidth(400);
     }
 
     /**
@@ -49,16 +53,18 @@ public class ASTPane extends BorderPane {
      * @param ast
      */
     public void update(AST ast) {
-        content.setRoot(astNodeToTreeItem(ast.root));
+        List<ASTNode> nodesInTree = new ArrayList<>();
+        content.setRoot(astNodeToTreeItem(ast.root, nodesInTree));
     }
 
-    private TreeItem<ASTNode> astNodeToTreeItem(ASTNode astNode) {
-
+    private TreeItem<ASTNode> astNodeToTreeItem(ASTNode astNode, List<ASTNode> nodesInTree) {
         TreeItem<ASTNode> tvNode = new TreeItem<ASTNode>(astNode);
         tvNode.setExpanded(true);
 
         for (ASTNode child : astNode.getChildren()) {
-            tvNode.getChildren().add(astNodeToTreeItem(child));
+            if(nodesInTree.contains(child))
+                continue;
+            tvNode.getChildren().add(astNodeToTreeItem(child, nodesInTree));
         }
         return tvNode;
     }

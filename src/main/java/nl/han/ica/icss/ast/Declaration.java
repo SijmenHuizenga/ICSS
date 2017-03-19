@@ -34,9 +34,11 @@ public class Declaration extends ASTNode {
 
     @Override
     public void check() {
+        value.check();
         //CH04
         if(!property.accepts(value.getType()))
             setError("Property " + property + " does not accept valuetype " + value.getType());
+
     }
 
     @Override
@@ -44,7 +46,7 @@ public class Declaration extends ASTNode {
         value = (Value) child;
     }
 
-    public static enum Type {
+    public enum Type {
 
         COLOR(Value.Type.COLOR),
         BACKGROUND_COLOR(Value.Type.COLOR),

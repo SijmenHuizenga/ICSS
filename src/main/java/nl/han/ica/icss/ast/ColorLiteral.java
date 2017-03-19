@@ -1,6 +1,8 @@
 package nl.han.ica.icss.ast;
 
-import java.awt.*;
+
+import java.awt.Color;
+import java.util.List;
 
 public class ColorLiteral extends Literal {
 
@@ -28,7 +30,7 @@ public class ColorLiteral extends Literal {
     }
 
     @Override
-    public Type getType() {
+    public Type getType(List<ASTNode> visited) {
         return Type.COLOR;
     }
 }

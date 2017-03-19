@@ -1,5 +1,7 @@
 package nl.han.ica.icss.ast;
 
+import java.util.List;
+
 public class PercentageLiteral extends Literal {
     public int value;
 
@@ -23,7 +25,7 @@ public class PercentageLiteral extends Literal {
     }
 
     @Override
-    public Type getType() {
+    public Type getType(List<ASTNode> visited) {
         return Type.PERCENTAGE;
     }
 }

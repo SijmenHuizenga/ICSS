@@ -1,6 +1,7 @@
 package nl.han.ica.icss.ast;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Operation extends Value {
 
@@ -42,13 +43,26 @@ public class Operation extends Value {
         //CH03
         if(lhs.getType() != rhs.getType() || lhs.getType() == Type.MIXED)
             setError("Operation left type does not equal the right type.");
+        lhs.check();
+        rhs.check();
     }
 
     @Override
-    public Type getType() {
+    public Type getType(List<ASTNode> visitedNodes) {
+        if(visitedNodes.contains(this))
+            return Type.UNKNOWN;
+        visitedNodes.add(this);
         if(lhs.getType() != rhs.getType())
             return Type.MIXED;
         return lhs.getType();
+    }
+
+    @Override
+    public boolean containsReferenceTo(ConstantReference ref, List<ASTNode> vistedNodes) {
+        if(vistedNodes.contains(this))
+            return true;
+        vistedNodes.add(this);
+        return lhs.containsReferenceTo(ref) || rhs.containsReferenceTo(ref);
     }
 
     public static enum Operator {
