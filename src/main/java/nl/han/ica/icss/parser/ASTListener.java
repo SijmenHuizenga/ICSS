@@ -15,7 +15,6 @@ public class ASTListener extends ICSSBaseListener {
     }
 
     public AST getAST() {
-        System.out.println(astFactory.getAst());
         return astFactory.getAst();
     }
 

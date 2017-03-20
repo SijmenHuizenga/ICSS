@@ -15,7 +15,7 @@ public class ConstantReference extends Value {
 
     @Override
     public String getNodeLabel() {
-        return "ConstantReference(" + name + ")";
+        return "ConstantReference(" + name + (assignment  == null ? "" : assignment.value.getType()) + ")";
     }
 
     @Override
@@ -40,7 +40,7 @@ public class ConstantReference extends Value {
             return true;
         vistitedNodes.add(this);
         if(assignment != null)
-            return assignment.value.containsReferenceTo(ref ,vistitedNodes);
+            return assignment.value.containsReferenceTo(ref, vistitedNodes);
         return false;
     }
 }
