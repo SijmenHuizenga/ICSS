@@ -1,14 +1,24 @@
 package nl.han.ica.icss.ast;
 
 import nl.han.ica.icss.checker.errors.CircularReferenceError;
+import org.junit.Before;
 import org.junit.Test;
 
+import static nl.han.ica.icss.ast.Asserts.assertContainsAllType;
 import static nl.han.ica.icss.ast.Asserts.assertContainsType;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by Sijmen on 20-3-2017.
  */
 public class AssignmentCircularityTest {
+
+    AST ast;
+
+    @Before
+    public void setUp() throws Exception {
+        ast = new AST();
+    }
 
     /**
      * circular within assignment
@@ -23,15 +33,18 @@ public class AssignmentCircularityTest {
         ref1.assignment = assignment;
         ref2.assignment = assignment;
 
-        assignment.check();
+        ast.root.addChild(assignment);
+        ast.check();
 
-        assertContainsType(CircularReferenceError.class, assignment.getErrors());
+        assertContainsType(CircularReferenceError.class, ast.getErrors());
     }
 
     /**
      * circular over multiple constants
      *   $a = $b;
      *   $b = $a;
+     *
+     *   both assignments should give an errror
      */
     @Test
     public void testRecursive_AisB_BisA() throws Exception {
@@ -48,11 +61,12 @@ public class AssignmentCircularityTest {
         refb1.assignment = assignmentB;
         refb2.assignment = assignmentB;
 
-        assignmentA.check();
-        assignmentB.check();
+        ast.root.addChild(assignmentA);
+        ast.root.addChild(assignmentB);
+        ast.check();
 
-        assertContainsType(CircularReferenceError.class, assignmentA.getErrors());
-        assertContainsType(CircularReferenceError.class, assignmentB.getErrors());
+        assertContainsAllType(CircularReferenceError.class, ast.getErrors());
+        assertEquals(2, ast.getErrors().size());
     }
 
     /**
@@ -74,8 +88,9 @@ public class AssignmentCircularityTest {
         ref1.assignment = assignment;
         ref2.assignment = assignment;
 
-        assignment.check();
+        ast.root.addChild(assignment);
+        ast.check();
 
-        assertContainsType(CircularReferenceError.class, assignment.getErrors());
+        assertContainsType(CircularReferenceError.class, ast.getErrors());
     }
 }

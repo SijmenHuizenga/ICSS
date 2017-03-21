@@ -8,7 +8,9 @@ import javafx.scene.control.TreeView;
 import javafx.scene.layout.BorderPane;
 import nl.han.ica.icss.ast.AST;
 import nl.han.ica.icss.ast.ASTNode;
+import nl.han.ica.icss.checker.errors.SemanticError;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -22,13 +24,18 @@ public class ASTPane extends BorderPane {
         super();
 
         title = new Label("Internal (AST):");
-        content = new TreeView<ASTNode>();
+        content = new TreeView<>();
         content.setCellFactory(treeview -> new TreeCell<ASTNode>() {
             @Override
             public void updateItem(ASTNode item, boolean empty) {
                 super.updateItem(item, empty);
 
                 getStyleClass().removeAll("error");
+
+                setOnMouseClicked(event -> {
+                    if(item.hasError())
+                        JOptionPane.showMessageDialog(null, displayErrors(item.getErrors()));
+                });
 
                 if (empty) {
                     setText("");
@@ -45,6 +52,13 @@ public class ASTPane extends BorderPane {
         setTop(title);
         setCenter(content);
         setMinWidth(400);
+    }
+
+    private String displayErrors(ArrayList<SemanticError> errors) {
+        StringBuilder builder = new StringBuilder();
+        for (SemanticError error : errors)
+            builder.append(error).append(System.lineSeparator());
+        return builder.toString();
     }
 
     /**
