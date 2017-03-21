@@ -1,5 +1,6 @@
-package nl.han.ica.icss.ast;
+package nl.han.ica.icss.ast.constants;
 
+import nl.han.ica.icss.ast.*;
 import nl.han.ica.icss.checker.errors.CircularReferenceError;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,7 +12,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * Created by Sijmen on 20-3-2017.
  */
-public class AssignmentCircularityTest {
+public class CircularAssignmentCheckTest {
 
     AST ast;
 

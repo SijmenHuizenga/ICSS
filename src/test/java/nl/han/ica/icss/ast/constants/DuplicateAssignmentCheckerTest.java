@@ -1,5 +1,8 @@
-package nl.han.ica.icss.ast;
+package nl.han.ica.icss.ast.constants;
 
+import nl.han.ica.icss.ast.AST;
+import nl.han.ica.icss.ast.PixelLiteral;
+import nl.han.ica.icss.ast.Stylerule;
 import nl.han.ica.icss.astfactory.ConstantFactory;
 import nl.han.ica.icss.astfactory.LiteralFactory;
 import nl.han.ica.icss.astfactory.StyleRuleFactory;

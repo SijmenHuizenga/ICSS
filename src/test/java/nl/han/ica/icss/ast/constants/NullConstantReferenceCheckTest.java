@@ -1,5 +1,8 @@
-package nl.han.ica.icss.ast;
+package nl.han.ica.icss.ast.constants;
 
+import nl.han.ica.icss.ast.Assignment;
+import nl.han.ica.icss.ast.ConstantReference;
+import nl.han.ica.icss.ast.PixelLiteral;
 import nl.han.ica.icss.astfactory.ConstantFactory;
 import nl.han.ica.icss.checker.errors.NullReferenceError;
 import org.junit.Test;
@@ -10,7 +13,7 @@ import static org.junit.Assert.assertNull;
 /**
  * Created by Sijmen on 21-3-2017.
  */
-public class ConstantReferenceToNonexistingConstantTest {
+public class NullConstantReferenceCheckTest {
 
     /**
      *  ref to $a;
