@@ -1,6 +1,8 @@
 package nl.han.ica.icss.ast;
 
 
+import nl.han.ica.icss.checker.errors.InvalidDataStateError;
+
 import java.awt.Color;
 import java.util.List;
 
@@ -25,7 +27,7 @@ public class ColorLiteral extends Literal {
                     Integer.valueOf(value.substring( 2, 4 ), 16 ),
                     Integer.valueOf(value.substring( 4, 6 ), 16 ) );
         }catch (Exception e){
-            setError("Color " + value + " is not a valid color");
+            addError(new InvalidDataStateError("Color " + value + " is not a valid color"));
         }
     }
 

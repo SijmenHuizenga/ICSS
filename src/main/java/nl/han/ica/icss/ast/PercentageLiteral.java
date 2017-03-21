@@ -1,5 +1,7 @@
 package nl.han.ica.icss.ast;
 
+import nl.han.ica.icss.checker.errors.InvalidDataStateError;
+
 import java.util.List;
 
 public class PercentageLiteral extends Literal {
@@ -21,7 +23,7 @@ public class PercentageLiteral extends Literal {
     @Override
     public void check() {
         if(value < 0)
-            setError("Percentage cannot be smaller than 0");
+            addError(new InvalidDataStateError("Percentage "+value+" is smaller than 0"));
     }
 
     @Override

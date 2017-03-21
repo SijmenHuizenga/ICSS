@@ -1,5 +1,7 @@
 package nl.han.ica.icss.ast;
 
+import nl.han.ica.icss.checker.errors.CircularReferenceError;
+
 import java.util.ArrayList;
 
 /**
@@ -29,7 +31,7 @@ public class Assignment extends ASTNode {
     public void check() {
         value.check();
         if(value.containsReferenceTo(key))
-            setError("Circular Reference! Value contains a reference to this key. This is not allowed.");
+            addError(new CircularReferenceError("Circular Reference! Value contains a reference to this key. This is not allowed."));
     }
 
     @Override

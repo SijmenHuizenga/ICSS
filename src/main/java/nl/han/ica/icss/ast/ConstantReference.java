@@ -1,5 +1,7 @@
 package nl.han.ica.icss.ast;
 
+import nl.han.ica.icss.checker.errors.NullReferenceError;
+
 import java.util.List;
 
 public class ConstantReference extends Value {
@@ -15,13 +17,13 @@ public class ConstantReference extends Value {
 
     @Override
     public String getNodeLabel() {
-        return "ConstantReference(" + name + (assignment  == null ? "" : assignment.value.getType()) + ")";
+        return "ConstantReference(" + name + ")";
     }
 
     @Override
     public void check() {
         if(assignment == null)
-            setError("Reference is referencing an unassigned constant.");
+            addError(new NullReferenceError("Reference is referencing an unassigned constant."));
     }
 
     @Override

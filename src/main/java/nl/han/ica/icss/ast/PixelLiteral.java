@@ -1,5 +1,7 @@
 package nl.han.ica.icss.ast;
 
+import nl.han.ica.icss.checker.errors.InvalidDataStateError;
+
 import java.util.List;
 
 public class PixelLiteral extends Literal {
@@ -27,7 +29,7 @@ public class PixelLiteral extends Literal {
     @Override
     public void check() {
         if(value < 0)
-            setError("Pixel value cannot be smaller than 0");
+            addError(new InvalidDataStateError("Pixel value " + value + " is smaller than 0"));
     }
 
     @Override

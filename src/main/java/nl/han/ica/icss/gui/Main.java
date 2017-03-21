@@ -13,7 +13,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import nl.han.ica.icss.ast.AST;
 import nl.han.ica.icss.checker.Checker;
-import nl.han.ica.icss.checker.SemanticError;
+import nl.han.ica.icss.checker.errors.SemanticError;
 import nl.han.ica.icss.generator.Generator;
 import nl.han.ica.icss.parser.ASTListener;
 import nl.han.ica.icss.parser.ICSSLexer;
@@ -202,7 +202,7 @@ public class Main extends Application implements ANTLRErrorListener {
             feedbackPane.clear();
             feedbackPane.addLine("Checking...");
 
-            (new Checker()).check(this.ast);
+            ast.check();
 
             ArrayList<SemanticError> errors = this.ast.getErrors();
             if (!errors.isEmpty()) {

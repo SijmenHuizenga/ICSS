@@ -1,12 +1,12 @@
 package nl.han.ica.icss.ast;
 
-import nl.han.ica.icss.checker.SemanticError;
+import nl.han.ica.icss.checker.errors.SemanticError;
 
 import java.util.ArrayList;
 
 public abstract class ASTNode {
 
-    private SemanticError error = null;
+    private ArrayList<SemanticError> errors = null;
 
     /*
      This method is used in the GUI to create an appropriate label
@@ -24,8 +24,6 @@ public abstract class ASTNode {
         return new ArrayList<>();
     }
 
-    ;
-
     /*
     By implementing this method in a subclass you can easily create AST nodes
       incrementally.
@@ -33,16 +31,18 @@ public abstract class ASTNode {
     public void addChild(ASTNode child) {
     }
 
-    public SemanticError getError() {
-        return error;
+    public ArrayList<SemanticError> getErrors() {
+        return errors;
     }
 
-    public void setError(String description) {
-        this.error = new SemanticError(description);
+    public void addError(SemanticError error) {
+        if(this.errors == null)
+            this.errors = new ArrayList<>();
+        this.errors.add(error);
     }
 
     public boolean hasError() {
-        return error != null;
+        return errors != null && !errors.isEmpty();
     }
 
     @Override

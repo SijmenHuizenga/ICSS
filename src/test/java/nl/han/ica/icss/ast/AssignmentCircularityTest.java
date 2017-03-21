@@ -1,27 +1,14 @@
 package nl.han.ica.icss.ast;
 
-import nl.han.ica.icss.checker.SemanticError;
-import org.junit.Before;
+import nl.han.ica.icss.checker.errors.CircularReferenceError;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static nl.han.ica.icss.ast.Asserts.assertContainsType;
 
 /**
  * Created by Sijmen on 20-3-2017.
  */
 public class AssignmentCircularityTest {
-
-    private final SemanticError ciruclarReferenceEror
-            = new SemanticError("Circular Reference! Value contains a reference to this key. This is not allowed.");
-
-    Stylesheet stylesheet;
-    AST ast;
-
-    @Before
-    public void setUp() throws Exception {
-        stylesheet = new Stylesheet();
-        ast = new AST(stylesheet);
-    }
 
     /**
      * circular within assignment
@@ -38,7 +25,7 @@ public class AssignmentCircularityTest {
 
         assignment.check();
 
-        assertEquals(ciruclarReferenceEror, assignment.getError());
+        assertContainsType(CircularReferenceError.class, assignment.getErrors());
     }
 
     /**
@@ -64,8 +51,8 @@ public class AssignmentCircularityTest {
         assignmentA.check();
         assignmentB.check();
 
-        assertEquals(ciruclarReferenceEror, assignmentA.getError());
-        assertEquals(ciruclarReferenceEror, assignmentB.getError());
+        assertContainsType(CircularReferenceError.class, assignmentA.getErrors());
+        assertContainsType(CircularReferenceError.class, assignmentB.getErrors());
     }
 
     /**
@@ -89,6 +76,6 @@ public class AssignmentCircularityTest {
 
         assignment.check();
 
-        assertEquals(ciruclarReferenceEror, assignment.getError());
+        assertContainsType(CircularReferenceError.class, assignment.getErrors());
     }
 }

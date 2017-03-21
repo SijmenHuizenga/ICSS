@@ -21,11 +21,13 @@ public class ConstantFactory {
     }
 
     public ConstantReference makeReference(ICSSParser.ConstantreferenceContext constantreference) {
-        String constantName = getConstantName(constantreference);
+        return makeReference(getConstantName(constantreference));
+    }
 
-        ConstantReference sameNameRef = findFirstRef(constantName);
+    public ConstantReference makeReference(String reference) {
+        ConstantReference sameNameRef = findFirstRef(reference);
 
-        ConstantReference ref = new ConstantReference(constantName,
+        ConstantReference ref = new ConstantReference(reference,
                 sameNameRef != null ? sameNameRef.assignment : null);
         references.add(ref);
 
@@ -40,10 +42,12 @@ public class ConstantFactory {
     }
 
 
-    public ASTNode makeAssignment(ICSSParser.ConstantreferenceContext ctx, Value value) {
-        String constantName = getConstantName(ctx);
+    public Assignment makeAssignment(ICSSParser.ConstantreferenceContext ctx, Value value) {
+        return makeAssignment(getConstantName(ctx), value);
+    }
 
-        ConstantReference ref = new ConstantReference(constantName, null);
+    public Assignment makeAssignment(String name, Value value) {
+        ConstantReference ref = new ConstantReference(name, null);
 
         Assignment ass = new Assignment(ref, value);
         ref.assignment = ass;

@@ -1,10 +1,21 @@
 package nl.han.ica.icss.ast;
 
+import nl.han.ica.icss.checker.errors.InvalidDataStateError;
+
 public class Selector extends ASTNode {
 
     public String tag;
     public String cls;
     public String id;
+
+    public Selector(String input){
+        if(input.startsWith("."))
+            setClass(input.substring(1));
+        else if(input.startsWith("#"))
+            setId(input.substring(1));
+        else
+            setTag(input);
+    }
 
     @Override
     public String getNodeLabel() {
@@ -14,7 +25,7 @@ public class Selector extends ASTNode {
     @Override
     public void check() {
         if(tag == null && cls == null && id == null)
-            setError("TAG, CLASS and ID are all null. This should be impossible!");
+            addError(new InvalidDataStateError("TAG, CLASS and ID are all null. This should be impossible!"));
     }
 
     public String getSelector() {

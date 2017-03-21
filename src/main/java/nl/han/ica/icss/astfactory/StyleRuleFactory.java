@@ -17,6 +17,10 @@ public class StyleRuleFactory {
         this.valueFactory = valueFactory;
     }
 
+    public Stylerule make(String selector){
+        return new Stylerule(makeSelector(selector), new ArrayList<>());
+    }
+
     public Stylerule make(StyleruleContext ctx) {
         return new Stylerule(
                 make(ctx.selector()),
@@ -60,12 +64,16 @@ public class StyleRuleFactory {
 
     private Selector make(SelectorContext selector) {
         if(selector.SELECTOR_CLASS() != null)
-            return new Selector().setClass(selector.SELECTOR_CLASS().toString().substring(1));
+            return new Selector(selector.SELECTOR_CLASS().toString());
         if(selector.SELECTOR_ELEEMNT() != null)
-            return new Selector().setTag(selector.SELECTOR_ELEEMNT().toString());
+            return new Selector(selector.SELECTOR_ELEEMNT().toString());
         if(selector.SELECTOR_ID() != null)
-            return new Selector().setId(selector.SELECTOR_ID().toString().substring(1));
-        throw new IllegalArgumentException("CLASS, ELEMENT and ID are all null. This is not possible.");
+            return new Selector(selector.SELECTOR_ID().toString());
+        return new Selector(null);
+    }
+
+    private Selector makeSelector(String selector){
+        return new Selector(selector);
     }
 
 

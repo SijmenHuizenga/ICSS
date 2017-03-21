@@ -1,5 +1,7 @@
 package nl.han.ica.icss.ast;
 
+import nl.han.ica.icss.checker.errors.OperationTypeError;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,8 +43,11 @@ public class Operation extends Value {
     @Override
     public void check() {
         //CH03
-        if(lhs.getType() != rhs.getType() || lhs.getType() == Type.MIXED)
-            setError("Operation left type does not equal the right type.");
+        Type lhsType = lhs.getType();
+        Type rhsType = rhs.getType();
+
+        if(lhsType != rhsType || lhsType == Type.MIXED)
+            addError(new OperationTypeError("Operation left type " +lhsType + " does not equal the right "+rhsType+" type."));
         lhs.check();
         rhs.check();
     }

@@ -1,5 +1,7 @@
 package nl.han.ica.icss.ast;
 
+import nl.han.ica.icss.checker.errors.PropertyTypeError;
+
 import java.util.ArrayList;
 
 /*
@@ -37,7 +39,7 @@ public class Declaration extends ASTNode {
         value.check();
         //CH04
         if(!property.accepts(value.getType()))
-            setError("Property " + property + " does not accept valuetype " + value.getType());
+            addError(new PropertyTypeError("Property " + property + " does not accept valuetype " + value.getType()));
 
     }
 
