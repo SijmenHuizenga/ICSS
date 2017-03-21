@@ -4,9 +4,11 @@ import com.tngtech.java.junit.dataprovider.DataProvider;
 import com.tngtech.java.junit.dataprovider.DataProviderRunner;
 import com.tngtech.java.junit.dataprovider.UseDataProvider;
 import nl.han.ica.icss.astfactory.ConstantFactory;
+import nl.han.ica.icss.checker.errors.CircularReferenceError;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static nl.han.ica.icss.ast.Asserts.assertContainsType;
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -67,5 +69,21 @@ public class GetTypeTest {
         ConstantReference referenceB = factory.makeReference("b");
 
         assertEquals(expectedType, referenceB.getType());
+    }
+
+    /**
+     * Test if a getting a type on a illegal circular reference
+     * does not crash.
+     */
+    @Test
+    public void testGetTypeCircularReference(){
+        ConstantReference ref1 = new ConstantReference("a", null);
+        ConstantReference ref2 = new ConstantReference("a", null);
+
+        Assignment assignment = new Assignment(ref1, ref2);
+        ref1.assignment = assignment;
+        ref2.assignment = assignment;
+
+        assertEquals(Value.Type.UNKNOWN, ref1.getType());
     }
 }
