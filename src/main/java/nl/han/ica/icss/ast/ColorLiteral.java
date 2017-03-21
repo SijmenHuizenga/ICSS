@@ -35,4 +35,20 @@ public class ColorLiteral extends Literal {
     public Type getType(List<ASTNode> visited) {
         return Type.COLOR;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ColorLiteral)) return false;
+
+        ColorLiteral that = (ColorLiteral) o;
+
+        return !(value != null ? !value.equals(that.value) : that.value != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return value != null ? value.hashCode() : 0;
+    }
 }

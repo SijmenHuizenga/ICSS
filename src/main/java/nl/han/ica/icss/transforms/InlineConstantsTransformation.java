@@ -2,13 +2,14 @@ package nl.han.ica.icss.transforms;
 
 import nl.han.ica.icss.ast.*;
 
-public class InlineConstants implements Transform {
+public class InlineConstantsTransformation implements Transform {
     @Override
     public void apply(AST ast) {
         apply(ast.root);
     }
 
-    public void apply(ASTNode node){
+    private void apply(ASTNode node){
+        //search for all nodes that contain Value's. On these values apply @this.getTransformedValue
         if(node instanceof Operation){
             Operation operation = (Operation) node;
             operation.lhs = getTransformedValue(operation.lhs);
@@ -17,6 +18,9 @@ public class InlineConstants implements Transform {
         if(node instanceof Declaration){
             Declaration declaration = (Declaration) node;
             declaration.value = getTransformedValue(declaration.value);
+        }
+        if(node instanceof Assignment){
+            ((Assignment) node).value = getTransformedValue(((Assignment) node).value);
         }
 
         for(ASTNode child : node.getChildren())

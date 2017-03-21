@@ -30,4 +30,20 @@ public class PercentageLiteral extends Literal {
     public Type getType(List<ASTNode> visited) {
         return Type.PERCENTAGE;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof PercentageLiteral)) return false;
+
+        PercentageLiteral that = (PercentageLiteral) o;
+
+        return value == that.value;
+
+    }
+
+    @Override
+    public int hashCode() {
+        return value;
+    }
 }

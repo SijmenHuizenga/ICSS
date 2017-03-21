@@ -36,4 +36,19 @@ public class PixelLiteral extends Literal {
     public Type getType(List<ASTNode> visited) {
         return Type.PIXEL;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof PixelLiteral)) return false;
+
+        PixelLiteral that = (PixelLiteral) o;
+
+        return value == that.value;
+    }
+
+    @Override
+    public int hashCode() {
+        return value;
+    }
 }

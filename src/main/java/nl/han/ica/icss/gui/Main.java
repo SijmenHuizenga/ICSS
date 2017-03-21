@@ -12,14 +12,13 @@ import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import nl.han.ica.icss.ast.AST;
-import nl.han.ica.icss.checker.Checker;
 import nl.han.ica.icss.checker.errors.SemanticError;
 import nl.han.ica.icss.generator.Generator;
 import nl.han.ica.icss.parser.ASTListener;
 import nl.han.ica.icss.parser.ICSSLexer;
 import nl.han.ica.icss.parser.ICSSParser;
-import nl.han.ica.icss.transforms.EvalOperations;
-import nl.han.ica.icss.transforms.InlineConstants;
+import nl.han.ica.icss.transforms.EvalOperationsTransformation;
+import nl.han.ica.icss.transforms.InlineConstantsTransformation;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.atn.ATNConfigSet;
 import org.antlr.v4.runtime.dfa.DFA;
@@ -223,8 +222,8 @@ public class Main extends Application implements ANTLRErrorListener {
             feedbackPane.clear();
             feedbackPane.addLine("Applying transformations...");
 
-            new InlineConstants().apply(ast);
-            new EvalOperations().apply(ast);
+            new InlineConstantsTransformation().apply(ast);
+            new EvalOperationsTransformation().apply(ast);
 
             //Update the AST Pane
             astPane.update(this.ast);
