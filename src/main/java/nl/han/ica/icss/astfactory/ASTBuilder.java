@@ -68,6 +68,14 @@ public class ASTBuilder {
         root.addChild(new Declaration(type, value));
     }
 
+    public ConstantReference cons(String name) {
+        return constantFactory.makeReference(name);
+    }
+
+    public Operation operation(Value left, Operation.Operator operator, Value right) {
+        return new Operation(left, operator, right);
+    }
+
     @FunctionalInterface
     public interface ASTBuilderLamba {
         void run(ASTBuilder builder);

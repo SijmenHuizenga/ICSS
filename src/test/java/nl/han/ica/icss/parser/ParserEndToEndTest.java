@@ -35,7 +35,10 @@ public class ParserEndToEndTest {
     @DataProvider
     public static Object[][] getInput(){
         return new Object[][] {
-                {"level0.icss", getLevel0Tree()}
+                {"level0.icss", getLevel0Tree()},
+                {"level1.icss", getLevel1Tree()},
+                {"level2.icss", getLevel2Tree()},
+                {"level3.icss", getLevel3Tree()},
         };
     }
 
@@ -70,6 +73,83 @@ public class ParserEndToEndTest {
             });
             b.style("#menu", menu -> {
                 menu.decleration(Declaration.Type.WIDTH, menu.px(520));
+            });
+            b.style(".menu", menu -> {
+                menu.decleration(Declaration.Type.COLOR, menu.color(0, 0, 0));
+            });
+        });
+    }
+
+    public static AST getLevel1Tree(){
+        return ASTBuilder.build(b -> {
+            b.assignment("linkcolor", b.color(255, 0, 0));
+            b.assignment("parwidth", b.px(500));
+            b.style("p", p ->{
+                p.decleration(Declaration.Type.BACKGROUND_COLOR, p.color(255, 255, 255));
+                p.decleration(Declaration.Type.WIDTH, p.cons("parwidth"));
+            });
+            b.style("a", a -> {
+                a.decleration(Declaration.Type.COLOR, a.cons("linkcolor"));
+            });
+            b.style("#menu", menu -> {
+                menu.decleration(Declaration.Type.WIDTH, menu.px(520));
+            });
+            b.style(".menu", menu -> {
+                menu.decleration(Declaration.Type.COLOR, menu.color(0, 0, 0));
+            });
+        });
+    }
+
+    public static AST getLevel2Tree(){
+        return ASTBuilder.build(b -> {
+            b.assignment("linkcolor", b.color(255, 0, 0));
+            b.assignment("parwidth", b.px(500));
+            b.style("p", p ->{
+                p.decleration(Declaration.Type.BACKGROUND_COLOR, p.color(255, 255, 255));
+                p.decleration(Declaration.Type.WIDTH, p.cons("parwidth"));
+            });
+            b.style("a", a -> {
+                a.decleration(Declaration.Type.COLOR, a.cons("linkcolor"));
+            });
+            b.style("#menu", menu -> {
+                menu.decleration(Declaration.Type.WIDTH, b.operation(
+                        menu.cons("parwidth"),
+                        Operation.Operator.PLUS,
+                        menu.px(20)
+                ));
+            });
+            b.style(".menu", menu -> {
+                menu.decleration(Declaration.Type.COLOR, menu.color(0, 0, 0));
+            });
+        });
+    }
+
+    public static AST getLevel3Tree(){
+        return ASTBuilder.build(b -> {
+            b.assignment("linkcolor", b.color(255, 0, 0));
+            b.assignment("parwidth", b.px(500));
+            b.style("p", p ->{
+                p.decleration(Declaration.Type.BACKGROUND_COLOR, p.color(255, 255, 255));
+                p.decleration(Declaration.Type.WIDTH, p.cons("parwidth"));
+
+                p.style("h1", h1 ->{
+                    h1.decleration(Declaration.Type.WIDTH, h1.operation(
+                        h1.cons("parwidth"),
+                        Operation.Operator.MIN,
+                        h1.px(50)
+                    ));
+                    h1.decleration(Declaration.Type.BACKGROUND_COLOR, h1.color(238, 238, 238));
+                });
+            });
+            b.style("a", a -> {
+                a.decleration(Declaration.Type.COLOR, a.cons("linkcolor"));
+            });
+            b.style("#menu", menu -> {
+                menu.decleration(Declaration.Type.WIDTH, b.operation(
+                        menu.cons("parwidth"),
+                        Operation.Operator.PLUS,
+                        menu.px(20)
+                ));
             });
             b.style(".menu", menu -> {
                 menu.decleration(Declaration.Type.COLOR, menu.color(0, 0, 0));

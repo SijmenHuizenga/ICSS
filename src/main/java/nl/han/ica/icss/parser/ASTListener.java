@@ -31,17 +31,10 @@ public class ASTListener extends ICSSBaseListener {
     }
 
     @Override
-    public void exitStylerule(ICSSParser.StyleruleContext ctx) {
-        astFactory.addStyleRule(ctx);
-    }
-
-    @Override
-    public void exitConstantassignment(ICSSParser.ConstantassignmentContext ctx) {
-        astFactory.addConstantDecleration(ctx);
-    }
-
-    @Override
-    public void exitStylesheet(ICSSParser.StylesheetContext ctx) {
-        super.exitStylesheet(ctx);
+    public void exitStylesheetpart(ICSSParser.StylesheetpartContext ctx) {
+        if(ctx.stylerule() != null)
+            astFactory.addStyleRule(ctx.stylerule());
+        else if(ctx.constantassignment() != null)
+            astFactory.addConstantDecleration(ctx.constantassignment());
     }
 }
