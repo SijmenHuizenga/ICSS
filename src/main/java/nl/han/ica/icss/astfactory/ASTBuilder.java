@@ -72,7 +72,7 @@ public class ASTBuilder {
         return constantFactory.makeReference(name);
     }
 
-    public Operation operation(Value left, Operation.Operator operator, Value right) {
+    public Operation opr(Value left, Operation.Operator operator, Value right) {
         return new Operation(left, operator, right);
     }
 

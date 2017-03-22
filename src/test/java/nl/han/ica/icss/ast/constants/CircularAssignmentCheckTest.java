@@ -83,7 +83,7 @@ public class CircularAssignmentCheckTest {
     }
 
     /**
-     * circular within operation within assignment
+     * circular within opr within assignment
      *   $a = 100px + $a;
      */
     @Test

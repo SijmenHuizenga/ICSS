@@ -77,7 +77,7 @@ public class ParserEndToEndTest {
                 a.decleration(Declaration.Type.COLOR, a.cons("linkcolor"));
             });
             b.style("#menu", menu -> {
-                menu.decleration(Declaration.Type.WIDTH, b.operation(
+                menu.decleration(Declaration.Type.WIDTH, b.opr(
                         menu.cons("parwidth"),
                         Operation.Operator.PLUS,
                         menu.px(20)
@@ -99,10 +99,10 @@ public class ParserEndToEndTest {
                 p.decleration(Declaration.Type.WIDTH, p.cons("parwidth"));
 
                 p.style("h1", h1 ->{
-                    h1.decleration(Declaration.Type.WIDTH, h1.operation(
-                        h1.cons("parwidth"),
-                        Operation.Operator.MIN,
-                        h1.px(50)
+                    h1.decleration(Declaration.Type.WIDTH, h1.opr(
+                            h1.cons("parwidth"),
+                            Operation.Operator.MIN,
+                            h1.px(50)
                     ));
                     h1.decleration(Declaration.Type.BACKGROUND_COLOR, h1.color(238, 238, 238));
                 });
@@ -111,7 +111,7 @@ public class ParserEndToEndTest {
                 a.decleration(Declaration.Type.COLOR, a.cons("linkcolor"));
             });
             b.style("#menu", menu -> {
-                menu.decleration(Declaration.Type.WIDTH, b.operation(
+                menu.decleration(Declaration.Type.WIDTH, b.opr(
                         menu.cons("parwidth"),
                         Operation.Operator.PLUS,
                         menu.px(20)
