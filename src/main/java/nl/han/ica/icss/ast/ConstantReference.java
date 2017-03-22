@@ -15,6 +15,7 @@ package nl.han.ica.icss.ast;
 import nl.han.ica.icss.checker.errors.NullReferenceError;
 
 import java.util.List;
+import java.util.Objects;
 
 public class ConstantReference extends Value {
 
@@ -56,5 +57,21 @@ public class ConstantReference extends Value {
         if(assignment != null)
             return assignment.value.containsReferenceTo(ref, vistitedNodes);
         return false;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ConstantReference)) return false;
+
+        ConstantReference reference = (ConstantReference) o;
+
+        return name.equals(reference.name);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return name.hashCode();
     }
 }

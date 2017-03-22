@@ -12,35 +12,42 @@
 
 package nl.han.ica.icss.ast;
 
-
+import nl.han.ica.icss.checker.errors.IllegalColorValueError;
 import nl.han.ica.icss.checker.errors.InvalidDataStateError;
 
 import java.awt.Color;
 import java.util.List;
 
-public class ColorLiteral extends Literal {
+public class ColorLiteral extends Literal implements Calculateble<ColorLiteral>{
 
-    public String value;
+    public int r, g, b;
 
-    public ColorLiteral(String value) {
-        this.value = value.substring(1);
+    public ColorLiteral(String hex) {
+        hex = hex.substring(1);
+        this.r = Integer.valueOf(hex.substring(0, 2), 16);
+        this.g = Integer.valueOf(hex.substring(2, 4), 16);
+        this.b = Integer.valueOf(hex.substring(4, 6), 16);
+    }
+
+    public ColorLiteral(int r, int g, int b){
+        this.r = r;
+        this.g = g;
+        this.b = b;
     }
 
     @Override
     public String getNodeLabel() {
-        return "Colorliteral(" + value + ")";
+        return "Colorliteral(" + r + "," + g + "," + b + ")";
     }
 
     @Override
     public void check() {
-        try{
-            new Color(
-                    Integer.valueOf(value.substring( 0, 2 ), 16 ),
-                    Integer.valueOf(value.substring( 2, 4 ), 16 ),
-                    Integer.valueOf(value.substring( 4, 6 ), 16 ) );
-        }catch (Exception e){
-            addError(new InvalidDataStateError("Color " + value + " is not a valid color"));
-        }
+        if(r < 0 || r > 255)
+            addError(new IllegalColorValueError("Red color is not between 0 and 255."));
+        if(g < 0 || g > 255)
+            addError(new IllegalColorValueError("Green color is not between 0 and 255."));
+        if(b < 0 || b > 255)
+            addError(new IllegalColorValueError("Blue color is not between 0 and 255."));
     }
 
     @Override
@@ -55,12 +62,58 @@ public class ColorLiteral extends Literal {
 
         ColorLiteral that = (ColorLiteral) o;
 
-        return !(value != null ? !value.equals(that.value) : that.value != null);
-
+        return r == that.r && g == that.g && b == that.b;
     }
 
     @Override
     public int hashCode() {
-        return value != null ? value.hashCode() : 0;
+        int result = r;
+        result = 31 * result + g;
+        result = 31 * result + b;
+        return result;
+    }
+
+    @Override
+    public Literal add(ColorLiteral other) {
+        return new ColorLiteral(
+                minmax(this.r + other.r),
+                minmax(this.g + other.g),
+                minmax(this.b + other.b)
+        );
+    }
+
+    @Override
+    public Literal subtract(ColorLiteral other) {
+        return new ColorLiteral(
+                minmax(this.r - other.r),
+                minmax(this.g - other.g),
+                minmax(this.b - other.b)
+        );
+    }
+
+    @Override
+    public Literal devide(ColorLiteral other) {
+        return new ColorLiteral(
+                this.r / other.r,
+                this.g / other.g,
+                this.b / other.b
+        );
+    }
+
+    @Override
+    public Literal multiply(ColorLiteral other) {
+        return new ColorLiteral(
+                minmax(this.r * other.r),
+                minmax(this.g * other.g),
+                minmax(this.b * other.b)
+        );
+    }
+
+    private int minmax(int i){
+        if(i > 255)
+            return 255;
+        if(i < 0)
+            return 0;
+        return i;
     }
 }

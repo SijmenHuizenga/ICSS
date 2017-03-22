@@ -59,7 +59,7 @@ public class Operation extends Value {
         Type rhsType = rhs.getType();
 
         if(lhsType != rhsType || lhsType == Type.MIXED)
-            addError(new OperationTypeError("Operation left type " +lhsType + " does not equal the right "+rhsType+" type."));
+            addError(new OperationTypeError("Operation left type " + lhsType + " does not equal the right " + rhsType + " type."));
         lhs.check();
         rhs.check();
     }
@@ -83,7 +83,24 @@ public class Operation extends Value {
         return lhs.containsReferenceTo(ref) || rhs.containsReferenceTo(ref);
     }
 
-    public static enum Operator {
-        PLUS, MIN, MUL, DEV
+    public Literal execute() {
+        Value l = lhs;
+        Value r = rhs;
+        if(!(l instanceof Calculateble && r instanceof Calculateble))
+            throw new IllegalStateException("Cannot calculate because L and R are not both instance of Calculateble");
+
+        if(operator == Operator.PLUS)
+            return ((Calculateble) l).add(r);
+        if(operator == Operator.MIN)
+            return ((Calculateble) l).subtract(r);
+        if(operator == Operator.MUL)
+            return ((Calculateble) l).multiply(r);
+        if(operator == Operator.DEV)
+            return ((Calculateble) l).devide(r);
+        return null;
+    }
+
+    public enum Operator {
+        PLUS, MIN, MUL, DEV,
     }
 }

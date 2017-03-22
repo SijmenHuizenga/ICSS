@@ -10,37 +10,13 @@
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package nl.han.ica.icss.transforms;
+package nl.han.ica.icss.checker.errors;
 
-import nl.han.ica.icss.ast.*;
-
-public class EvalOperationsTransformation implements Transform {
-
-    @Override
-    public void apply(AST ast) {
-        apply(ast.root);
-    }
-
-    private void apply(ASTNode node){
-        node.getChildren().forEach(this::apply);
-
-        //search for all nodes that contain operations's and replace the values by the calculated value.
-        if(node instanceof Operation){
-            Operation operation = (Operation) node;
-            if(operation.lhs instanceof Operation)
-                operation.lhs = ((Operation) operation.lhs).execute();
-            if(operation.rhs instanceof Operation)
-                operation.rhs = ((Operation) operation.rhs).execute();
-        }
-        if(node instanceof Declaration){
-            Declaration declaration = (Declaration) node;
-            if(declaration.value instanceof Operation)
-                declaration.value = ((Operation) declaration.value).execute();
-        }
-        if(node instanceof Assignment){
-            Assignment assignment = (Assignment) node;
-            if(assignment.value instanceof Operation)
-                assignment.value = ((Operation) assignment.value).execute();
-        }
+/**
+ * Created by Sijmen on 22-3-2017.
+ */
+public class IllegalColorValueError extends SemanticError {
+    public IllegalColorValueError(String description) {
+        super(description);
     }
 }

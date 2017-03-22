@@ -37,12 +37,10 @@ public class DuplicateAssignmentCheckerTest {
     ValueFactory valueFactory;
     StyleRuleFactory styleRuleFactory;
 
-    ConstantFactory factory;
     AST ast;
 
     @Before
     public void setUp() throws Exception {
-        factory = new ConstantFactory();
         ast = new AST();
 
         constantFactory = new ConstantFactory();
@@ -59,8 +57,8 @@ public class DuplicateAssignmentCheckerTest {
      */
     @Test
     public void testDuplicateAssignments() throws Exception {
-        ast.root.addChild(factory.makeAssignment("A", new PixelLiteral(50)));
-        ast.root.addChild(factory.makeAssignment("A", new PixelLiteral(60)));
+        ast.root.addChild(constantFactory.makeAssignment("A", new PixelLiteral(50)));
+        ast.root.addChild(constantFactory.makeAssignment("A", new PixelLiteral(60)));
 
         ast.check();
 
@@ -81,10 +79,10 @@ public class DuplicateAssignmentCheckerTest {
     @Test
     public void testDuplicateAssignmentsInsideBlocks() throws Exception {
         Stylerule idBlock2 = styleRuleFactory.make(".id2");
-        idBlock2.addChild(factory.makeAssignment("a", new PixelLiteral(100)));
+        idBlock2.addChild(constantFactory.makeAssignment("a", new PixelLiteral(100)));
 
         Stylerule idBlock = styleRuleFactory.make("#id");
-        idBlock.addChild(factory.makeAssignment("a", new PixelLiteral(50)));
+        idBlock.addChild(constantFactory.makeAssignment("a", new PixelLiteral(50)));
         idBlock.addChild(idBlock2);
 
         ast.root.addChild(idBlock);

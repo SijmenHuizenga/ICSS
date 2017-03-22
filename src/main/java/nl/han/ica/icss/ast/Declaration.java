@@ -80,4 +80,22 @@ public class Declaration extends ASTNode {
             return false;
         }
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Declaration)) return false;
+
+        Declaration that = (Declaration) o;
+
+        return property == that.property && value.equals(that.value);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = property.hashCode();
+        result = 31 * result + value.hashCode();
+        return result;
+    }
 }

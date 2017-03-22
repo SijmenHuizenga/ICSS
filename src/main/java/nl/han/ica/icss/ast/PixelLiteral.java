@@ -16,7 +16,7 @@ import nl.han.ica.icss.checker.errors.InvalidDataStateError;
 
 import java.util.List;
 
-public class PixelLiteral extends Literal {
+public class PixelLiteral extends Literal implements Calculateble<PixelLiteral> {
 
     public int value;
 
@@ -62,5 +62,25 @@ public class PixelLiteral extends Literal {
     @Override
     public int hashCode() {
         return value;
+    }
+
+    @Override
+    public Literal add(PixelLiteral other) {
+        return new PixelLiteral(this.value + other.value);
+    }
+
+    @Override
+    public Literal subtract(PixelLiteral other) {
+        return new PixelLiteral(this.value - other.value);
+    }
+
+    @Override
+    public Literal devide(PixelLiteral other) {
+        return new PixelLiteral(this.value / other.value);
+    }
+
+    @Override
+    public Literal multiply(PixelLiteral other) {
+        return new PixelLiteral(this.value * other.value);
     }
 }

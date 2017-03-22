@@ -16,7 +16,7 @@ import nl.han.ica.icss.checker.errors.InvalidDataStateError;
 
 import java.util.List;
 
-public class PercentageLiteral extends Literal {
+public class PercentageLiteral extends Literal implements Calculateble<PercentageLiteral>{
     public int value;
 
     public PercentageLiteral(int value) {
@@ -57,5 +57,25 @@ public class PercentageLiteral extends Literal {
     @Override
     public int hashCode() {
         return value;
+    }
+
+    @Override
+    public Literal add(PercentageLiteral other) {
+        return new PercentageLiteral(this.value + other.value);
+    }
+
+    @Override
+    public Literal subtract(PercentageLiteral other) {
+        return new PercentageLiteral(this.value - other.value);
+    }
+
+    @Override
+    public Literal devide(PercentageLiteral other) {
+        return new PercentageLiteral(this.value / other.value);
+    }
+
+    @Override
+    public Literal multiply(PercentageLiteral other) {
+        return new PercentageLiteral(this.value * other.value);
     }
 }
