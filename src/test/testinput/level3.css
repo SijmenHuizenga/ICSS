@@ -1,0 +1,21 @@
+p {
+    background-color: #ffffff;
+    width: 500px;
+}
+
+p > h1 {
+    width: 450px;
+    background-color: #eeeeee;
+}
+
+a {
+    color: #ff0000;
+}
+
+#menu {
+    width: 520px;
+}
+
+.menu {
+    color: #000000;
+}

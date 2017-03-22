@@ -24,6 +24,7 @@ import org.junit.internal.ArrayComparisonFailure;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Scanner;
 
 import static org.junit.Assert.assertEquals;
 
@@ -86,6 +87,13 @@ public class Asserts {
         walker.walk(listener, parseTree);
 
         assertEquals(expectedOutput, listener.getAST());
+    }
+
+    public static void assertStringToFile(String resourcename, String actual){
+        String expected = new Scanner(Asserts.class.getClassLoader().getResourceAsStream(resourcename), "UTF-8")
+                .useDelimiter("\\A")
+                .next();
+        assertEquals(expected.replaceAll("\\s+", ""), actual.replaceAll("\\s+", ""));
     }
 
 }
