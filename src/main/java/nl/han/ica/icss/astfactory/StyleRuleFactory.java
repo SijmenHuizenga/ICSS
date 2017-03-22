@@ -59,7 +59,7 @@ public class StyleRuleFactory {
 
     private ASTNode make(DeclerationContext decleration) {
         return new Declaration(make(decleration.attribute()),
-                valueFactory.make(decleration.calculatedvalue()));
+                valueFactory.make(decleration.value()));
     }
 
     private Declaration.Type make(AttributeContext attribute) {

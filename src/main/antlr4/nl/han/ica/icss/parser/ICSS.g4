@@ -21,22 +21,21 @@ stylerule: selector STYLERULE_OPEN declerationpart* STYLERULE_CLOSE;
 selector: ((SELECTOR_ELEEMNT | SELECTOR_ID) | SELECTOR_CLASS);
 
 declerationpart: decleration | stylerule;
-decleration: attribute ATTRIBUTE_VALUE_SEPERATOR calculatedvalue LINEEND;
+decleration: attribute ATTRIBUTE_VALUE_SEPERATOR value LINEEND;
 
 attribute: ATTRIBUTE_COLOR | ATTRIBUTE_BACKGROUND_COLOR | ATTRIBUTE_WIDTH | ATTRIBUTE_HEIGHT;
 
-value: literal | constantreference;
+value: realvalue | som;
+som: realvalue (calcoperator realvalue)+;
+realvalue: (literal | constantreference);
 
 literal: LITERAL_COLOR | LITERAL_PIXELS | LITERAL_PERCENTAGE;
-
-calculatedvalue: value (|moreCalculatedValues);
-moreCalculatedValues: calcoperator calculatedvalue;
 
 calcoperator: CALCOPERATOR_ADD | CALCOPERATOR_SUB | CALCOPERATOR_MUL | CALCOPERATOR_DEV;
 
 constantreference: CONSTANT_NAME;
 
-constantassignment: constantreference CONSTANT_ASSIGNMENT_SEPERATOR calculatedvalue LINEEND;
+constantassignment: constantreference CONSTANT_ASSIGNMENT_SEPERATOR value LINEEND;
 
 WS: [ \t\r\n]+ -> skip;
 

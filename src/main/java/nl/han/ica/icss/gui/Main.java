@@ -31,6 +31,7 @@ import nl.han.ica.icss.parser.ICSSLexer;
 import nl.han.ica.icss.parser.ICSSParser;
 import nl.han.ica.icss.transforms.EvalOperationsTransformation;
 import nl.han.ica.icss.transforms.InlineConstantsTransformation;
+import nl.han.ica.icss.transforms.LogicalCalculationTransformation;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.atn.ATNConfigSet;
 import org.antlr.v4.runtime.dfa.DFA;
@@ -226,6 +227,7 @@ public class Main extends Application implements ANTLRErrorListener {
             feedbackPane.addLine("Applying transformations...");
 
             new InlineConstantsTransformation().apply(ast);
+            new LogicalCalculationTransformation().apply(ast);
             new EvalOperationsTransformation().apply(ast);
 
             //Update the AST Pane

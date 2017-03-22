@@ -10,36 +10,22 @@
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package nl.han.ica.icss.astfactory;
+package nl.han.ica.icss.transforms;
 
 import nl.han.ica.icss.ast.AST;
-import nl.han.ica.icss.ast.Value;
-import nl.han.ica.icss.parser.ICSSParser;
 
 /**
- * Created by Sijmen on 18-3-2017.
+ * Created by Sijmen on 22-3-2017.
  */
-public class ASTFactory {
+public class LogicalCalculationTransformation implements Transform {
 
-    AST ast = new AST();
+    /**
+     * Input is like this
+     * @param ast
+     */
 
-    ConstantFactory constantFactory = new ConstantFactory();
-    LiteralFactory literalFactory = new LiteralFactory();
+    @Override
+    public void apply(AST ast) {
 
-    ValueFactory valueFactory = new ValueFactory(literalFactory, constantFactory);
-
-    StyleRuleFactory styleRuleFactory = new StyleRuleFactory(valueFactory);
-
-    public void addConstantDecleration(ICSSParser.ConstantassignmentContext ctx){
-        Value value = valueFactory.make(ctx.value());
-        ast.root.addChild(constantFactory.makeAssignment(ctx.constantreference(), value));
-    }
-
-    public AST getAst() {
-        return ast;
-    }
-
-    public void addStyleRule(ICSSParser.StyleruleContext ctx) {
-        ast.root.addChild(styleRuleFactory.make(ctx));
     }
 }
