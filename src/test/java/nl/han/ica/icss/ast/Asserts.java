@@ -12,10 +12,20 @@
 
 package nl.han.ica.icss.ast;
 
+import nl.han.ica.icss.parser.ASTListener;
+import nl.han.ica.icss.parser.ICSSLexer;
+import nl.han.ica.icss.parser.ICSSParser;
+import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.tree.ParseTree;
+import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.junit.internal.ArrayComparisonFailure;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by Sijmen on 21-3-2017.
@@ -58,6 +68,24 @@ public class Asserts {
                         "Expected array item containging type " + expectedType + " but item was type " + o.getClass(),
                         new AssertionError("Input array " + Arrays.toString(objects.toArray())), i);
         }
+    }
+
+    public static void assertASTFromFile(String resourceName, AST expectedOutput) throws Exception {
+        ANTLRInputStream input = new ANTLRInputStream(
+                Asserts.class.getClassLoader().getResourceAsStream(resourceName)
+        );
+
+        ICSSLexer lexer = new ICSSLexer(input);
+        CommonTokenStream tokens = new CommonTokenStream(lexer);
+
+        ICSSParser parser = new ICSSParser(tokens);
+        ParseTree parseTree = parser.stylesheet();
+
+        ASTListener listener = new ASTListener();
+        ParseTreeWalker walker = new ParseTreeWalker();
+        walker.walk(listener, parseTree);
+
+        assertEquals(expectedOutput, listener.getAST());
     }
 
 }

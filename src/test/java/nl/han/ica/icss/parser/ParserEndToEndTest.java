@@ -12,58 +12,21 @@
 
 package nl.han.ica.icss.parser;
 
-import com.tngtech.java.junit.dataprovider.DataProvider;
-import com.tngtech.java.junit.dataprovider.DataProviderRunner;
-import com.tngtech.java.junit.dataprovider.UseDataProvider;
-import nl.han.ica.icss.ast.*;
+import nl.han.ica.icss.ast.Declaration;
+import nl.han.ica.icss.ast.Operation;
 import nl.han.ica.icss.astfactory.ASTBuilder;
-import org.antlr.v4.runtime.ANTLRInputStream;
-import org.antlr.v4.runtime.CommonTokenStream;
-import org.antlr.v4.runtime.tree.ParseTree;
-import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
-import static org.junit.Assert.assertEquals;
+import static nl.han.ica.icss.ast.Asserts.assertASTFromFile;
 
 /**
  * Created by Sijmen on 22-3-2017.
  */
-@RunWith(DataProviderRunner.class)
 public class ParserEndToEndTest {
 
-    @DataProvider
-    public static Object[][] getInput(){
-        return new Object[][] {
-                {"level0.icss", getLevel0Tree()},
-                {"level1.icss", getLevel1Tree()},
-                {"level2.icss", getLevel2Tree()},
-                {"level3.icss", getLevel3Tree()},
-        };
-    }
-
-    @UseDataProvider("getInput")
     @Test
-    public void testApplyDeclaration(String resourceName, AST expectedOutput) throws Exception {
-        ANTLRInputStream input = new ANTLRInputStream(
-                this.getClass().getClassLoader().getResourceAsStream(resourceName)
-        );
-
-        ICSSLexer lexer = new ICSSLexer(input);
-        CommonTokenStream tokens = new CommonTokenStream(lexer);
-        
-        ICSSParser parser = new ICSSParser(tokens);
-        ParseTree parseTree = parser.stylesheet();
-
-        ASTListener listener = new ASTListener();
-        ParseTreeWalker walker = new ParseTreeWalker();
-        walker.walk(listener, parseTree);
-
-        assertEquals(expectedOutput, listener.getAST());
-    }
-
-    public static AST getLevel0Tree(){
-        return ASTBuilder.build(b -> {
+    public void testLevel0() throws Exception {
+        assertASTFromFile("level0.icss", ASTBuilder.build(b -> {
             b.style("p", p ->{
                 p.decleration(Declaration.Type.BACKGROUND_COLOR, p.color(255, 255, 255));
                 p.decleration(Declaration.Type.WIDTH, p.px(500));
@@ -77,14 +40,15 @@ public class ParserEndToEndTest {
             b.style(".menu", menu -> {
                 menu.decleration(Declaration.Type.COLOR, menu.color(0, 0, 0));
             });
-        });
+        }));
     }
 
-    public static AST getLevel1Tree(){
-        return ASTBuilder.build(b -> {
+    @Test
+    public void testLevel1() throws Exception {
+        assertASTFromFile("level1.icss", ASTBuilder.build(b -> {
             b.assignment("linkcolor", b.color(255, 0, 0));
             b.assignment("parwidth", b.px(500));
-            b.style("p", p ->{
+            b.style("p", p -> {
                 p.decleration(Declaration.Type.BACKGROUND_COLOR, p.color(255, 255, 255));
                 p.decleration(Declaration.Type.WIDTH, p.cons("parwidth"));
             });
@@ -97,11 +61,12 @@ public class ParserEndToEndTest {
             b.style(".menu", menu -> {
                 menu.decleration(Declaration.Type.COLOR, menu.color(0, 0, 0));
             });
-        });
+        }));
     }
 
-    public static AST getLevel2Tree(){
-        return ASTBuilder.build(b -> {
+    @Test
+    public void testLevel2() throws Exception {
+        assertASTFromFile("level2.icss", ASTBuilder.build(b -> {
             b.assignment("linkcolor", b.color(255, 0, 0));
             b.assignment("parwidth", b.px(500));
             b.style("p", p ->{
@@ -121,11 +86,12 @@ public class ParserEndToEndTest {
             b.style(".menu", menu -> {
                 menu.decleration(Declaration.Type.COLOR, menu.color(0, 0, 0));
             });
-        });
+        }));
     }
 
-    public static AST getLevel3Tree(){
-        return ASTBuilder.build(b -> {
+    @Test
+    public void testLevel3() throws Exception {
+        assertASTFromFile("level3.icss", ASTBuilder.build(b -> {
             b.assignment("linkcolor", b.color(255, 0, 0));
             b.assignment("parwidth", b.px(500));
             b.style("p", p ->{
@@ -154,7 +120,7 @@ public class ParserEndToEndTest {
             b.style(".menu", menu -> {
                 menu.decleration(Declaration.Type.COLOR, menu.color(0, 0, 0));
             });
-        });
+        }));
     }
 
 }
