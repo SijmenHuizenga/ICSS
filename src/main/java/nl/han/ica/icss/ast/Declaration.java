@@ -62,15 +62,17 @@ public class Declaration extends ASTNode {
 
     public enum Type {
 
-        COLOR(Value.Type.COLOR),
-        BACKGROUND_COLOR(Value.Type.COLOR),
-        WIDTH(Value.Type.PERCENTAGE, Value.Type.PIXEL),
-        HEIGHT(Value.Type.PERCENTAGE, Value.Type.PIXEL);
+        COLOR("color", Value.Type.COLOR),
+        BACKGROUND_COLOR("background-color", Value.Type.COLOR),
+        WIDTH("width", Value.Type.PERCENTAGE, Value.Type.PIXEL),
+        HEIGHT("height", Value.Type.PERCENTAGE, Value.Type.PIXEL);
 
         private Value.Type[] acceptedtypes;
+        private String name;
 
-        Type(Value.Type... acceptedtypes) {
+        Type(String name, Value.Type... acceptedtypes) {
             this.acceptedtypes = acceptedtypes;
+            this.name = name;
         }
 
         public boolean accepts(Value.Type type) {
@@ -78,6 +80,11 @@ public class Declaration extends ASTNode {
                 if(type == accepted)
                     return true;
             return false;
+        }
+
+        @Override
+        public String toString() {
+            return name;
         }
     }
 

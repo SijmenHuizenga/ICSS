@@ -35,7 +35,7 @@ public class PixelLiteral extends Literal implements Calculateble<PixelLiteral> 
 
     @Override
     public String toString() {
-        return getNodeLabel();
+        return value + "px";
     }
 
     @Override

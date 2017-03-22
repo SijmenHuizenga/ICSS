@@ -54,6 +54,11 @@ public class PercentageLiteral extends Literal implements Calculateble<Percentag
     }
 
     @Override
+    public String toString() {
+        return value + "%";
+    }
+
+    @Override
     public int hashCode() {
         return value;
     }

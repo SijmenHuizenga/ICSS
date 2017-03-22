@@ -75,39 +75,17 @@ public class Main extends Application implements ANTLRErrorListener {
         outputPane = new OutputPane();
         feedbackPane = new FeedbackPane();
 
-        //Reference for the callbacks
-        final Main me = this;
 
         //Create buttons
         parseButton = new Button("Parse");
-        parseButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent e) {
-                me.parse();
-            }
-        });
+        parseButton.setOnAction(e -> parse());
 
         checkButton = new Button("Check");
-        checkButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent e) {
-                me.check();
-            }
-        });
+        checkButton.setOnAction(e -> check());
         transformButton = new Button("Transform");
-        transformButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent e) {
-                me.transform();
-            }
-        });
+        transformButton.setOnAction(e -> transform());
         generateButton = new Button("Generate");
-        generateButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent e) {
-                me.generate();
-            }
-        });
+        generateButton.setOnAction(e -> generate());
 
         //Create menus
         MenuBar menuBar = new MenuBar();
@@ -187,17 +165,28 @@ public class Main extends Application implements ANTLRErrorListener {
         parser.addErrorListener(this);
         ParseTree parseTree = parser.stylesheet();
 
-        //Extract AST from the Antlr parse tree
-        feedbackPane.addLine("Building AST...");
-        ASTListener listener = new ASTListener();
-        ParseTreeWalker walker = new ParseTreeWalker();
-        walker.walk(listener, parseTree);
+        //only try to build the AST when the syntax is correct
+        if(parser.getNumberOfSyntaxErrors() == 0)
+            buildAst(parseTree);
 
-        this.ast = listener.getAST();
 
         //Update the AST Pane
         astPane.update(this.ast);
         updateToolbar();
+    }
+
+    private void buildAst(ParseTree parseTree) {
+        //Extract AST from the Antlr parse tree
+        feedbackPane.addLine("Building AST...");
+        ASTListener listener = new ASTListener();
+        ParseTreeWalker walker = new ParseTreeWalker();
+        try{
+            walker.walk(listener, parseTree);
+        }catch (Exception e){
+            feedbackPane.addLine(e.getMessage());
+        }
+
+        this.ast = listener.getAST();
     }
 
     private void check() {
@@ -250,7 +239,6 @@ public class Main extends Application implements ANTLRErrorListener {
     }
 
     private void updateToolbar() {
-
         //Quick and ugly way...
         checkButton.setDisable(true);
         transformButton.setDisable(true);
@@ -266,23 +254,19 @@ public class Main extends Application implements ANTLRErrorListener {
 
     //Catch ANTLR errors
     @Override
-    public void reportAmbiguity(Parser arg0, DFA arg1, int arg2, int arg3,
-                                boolean arg4, BitSet arg5, ATNConfigSet arg6) {
+    public void reportAmbiguity(Parser recognizer, DFA dfa, int startIndex, int stopIndex, boolean exact, BitSet ambigAlts, ATNConfigSet configs) {
     }
 
     @Override
-    public void reportAttemptingFullContext(Parser arg0, DFA arg1, int arg2,
-                                            int arg3, BitSet arg4, ATNConfigSet arg5) {
+    public void reportAttemptingFullContext(Parser recognizer, DFA dfa, int startIndex, int stopIndex, BitSet conflictingAlts, ATNConfigSet configs) {
     }
 
     @Override
-    public void reportContextSensitivity(Parser arg0, DFA arg1, int arg2,
-                                         int arg3, int arg4, ATNConfigSet arg5) {
+    public void reportContextSensitivity(Parser recognizer, DFA dfa, int startIndex, int stopIndex, int prediction, ATNConfigSet configs) {
     }
 
     @Override
-    public void syntaxError(Recognizer<?, ?> arg0, Object arg1, int arg2,
-                            int arg3, String arg4, RecognitionException arg5) {
-        feedbackPane.addLine(arg5.getMessage());
+    public void syntaxError(Recognizer<?, ?> recognizer, Object offendingSymbol, int line, int charPositionInLine, String msg, RecognitionException e) {
+        feedbackPane.addLine(msg);
     }
 }

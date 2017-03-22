@@ -116,4 +116,9 @@ public class ColorLiteral extends Literal implements Calculateble<ColorLiteral>{
             return 0;
         return i;
     }
+
+    @Override
+    public String toString() {
+        return String.format("#%02x%02x%02x", r, g, b);
+    }
 }
