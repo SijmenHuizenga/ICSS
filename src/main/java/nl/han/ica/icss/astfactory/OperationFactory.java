@@ -34,7 +34,7 @@ public class OperationFactory {
         this.valueFactory = valueFactory;
     }
 
-    public Value make(SomContext som) {
+    public Operation make(SomContext som) {
         ArrayList<Object> parts = new ArrayList<>();
         for(int i = 0; i < som.getChildCount(); i++)
             parts.add(makeAstNode(som.getChild(i)));
@@ -50,7 +50,7 @@ public class OperationFactory {
         if(parts.size() != 1)
             throw new IllegalStateException("Could not convert linear tree to 2D tree. Some elements were left!");
 
-        return (Value) parts.get(0);
+        return (Operation) parts.get(0);
     }
 
     private Object makeAstNode(ParseTree child) {

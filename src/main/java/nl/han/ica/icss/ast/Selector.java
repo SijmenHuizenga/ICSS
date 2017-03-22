@@ -63,4 +63,25 @@ public class Selector extends ASTNode {
         this.id = id;
         return this;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Selector)) return false;
+
+        Selector selector = (Selector) o;
+
+        if (tag != null ? !tag.equals(selector.tag) : selector.tag != null) return false;
+        if (cls != null ? !cls.equals(selector.cls) : selector.cls != null) return false;
+        return !(id != null ? !id.equals(selector.id) : selector.id != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = tag != null ? tag.hashCode() : 0;
+        result = 31 * result + (cls != null ? cls.hashCode() : 0);
+        result = 31 * result + (id != null ? id.hashCode() : 0);
+        return result;
+    }
 }

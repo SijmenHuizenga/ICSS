@@ -62,4 +62,20 @@ public class Stylesheet extends ASTNode {
     public void check() {
         body.forEach(ASTNode::check);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Stylesheet)) return false;
+
+        Stylesheet that = (Stylesheet) o;
+
+        return body.equals(that.body);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return body.hashCode();
+    }
 }

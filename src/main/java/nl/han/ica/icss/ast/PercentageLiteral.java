@@ -51,7 +51,6 @@ public class PercentageLiteral extends Literal implements Calculateble<Percentag
         PercentageLiteral that = (PercentageLiteral) o;
 
         return value == that.value;
-
     }
 
     @Override

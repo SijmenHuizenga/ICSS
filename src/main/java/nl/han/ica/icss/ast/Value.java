@@ -50,4 +50,11 @@ public abstract class Value extends ASTNode {
         UNKNOWN // not (yet) known because the value is not yet found.
     }
 
+    public static <T> boolean containsreal(List<T> list, T o){
+        for(T t : list)
+            if(t == o)
+                return true;
+        return false;
+    }
+
 }

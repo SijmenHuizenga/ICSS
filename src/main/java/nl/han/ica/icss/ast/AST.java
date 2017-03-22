@@ -67,7 +67,7 @@ public class AST {
         }
         vistiedNodes.add(node);
         for (ASTNode child : node.getChildren())
-            if(!vistiedNodes.contains(child))
+            if(!Value.containsreal(vistiedNodes, child))
                 collectErrors(vistiedNodes, errors, child);
     }
 
@@ -77,5 +77,26 @@ public class AST {
                 "root=" + root +
                 ", symboltable=" + symboltable +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof AST)) return false;
+
+        AST ast = (AST) o;
+
+        if (checked != ast.checked) return false;
+        if (root != null ? !root.equals(ast.root) : ast.root != null) return false;
+        return !(symboltable != null ? !symboltable.equals(ast.symboltable) : ast.symboltable != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = root != null ? root.hashCode() : 0;
+        result = 31 * result + (symboltable != null ? symboltable.hashCode() : 0);
+        result = 31 * result + (checked ? 1 : 0);
+        return result;
     }
 }

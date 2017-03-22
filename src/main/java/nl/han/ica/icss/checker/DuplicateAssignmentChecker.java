@@ -35,7 +35,7 @@ public class DuplicateAssignmentChecker {
     }
 
     private void checkDuplicateAssignmentsRecursive(ASTNode ast){
-        if(vistedNodes.contains(ast))
+        if(Value.containsreal(vistedNodes, ast))
             return;
         vistedNodes.add(ast);
 

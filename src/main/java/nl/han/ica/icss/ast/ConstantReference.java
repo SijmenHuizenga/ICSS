@@ -15,7 +15,6 @@ package nl.han.ica.icss.ast;
 import nl.han.ica.icss.checker.errors.NullReferenceError;
 
 import java.util.List;
-import java.util.Objects;
 
 public class ConstantReference extends Value {
 
@@ -41,7 +40,7 @@ public class ConstantReference extends Value {
 
     @Override
     public Type getType(List<ASTNode> vistitedNodes) {
-        if(vistitedNodes.contains(this))
+        if(containsreal(vistitedNodes, this))
             return Type.UNKNOWN;
         vistitedNodes.add(this);
         return assignment == null ? Type.UNKNOWN : assignment.value.getType(vistitedNodes);
@@ -49,14 +48,12 @@ public class ConstantReference extends Value {
 
     @Override
     public boolean containsReferenceTo(ConstantReference ref, List<ASTNode> vistitedNodes) {
-        if(name.equals(ref.name))
+        if (name.equals(ref.name))
             return true;
-        if(vistitedNodes.contains(this))
+        if (containsreal(vistitedNodes, this))
             return true;
         vistitedNodes.add(this);
-        if(assignment != null)
-            return assignment.value.containsReferenceTo(ref, vistitedNodes);
-        return false;
+        return assignment != null && assignment.value.containsReferenceTo(ref, vistitedNodes);
     }
 
     @Override
@@ -67,7 +64,6 @@ public class ConstantReference extends Value {
         ConstantReference reference = (ConstantReference) o;
 
         return name.equals(reference.name);
-
     }
 
     @Override

@@ -66,7 +66,7 @@ public class Operation extends Value {
 
     @Override
     public Type getType(List<ASTNode> visitedNodes) {
-        if(visitedNodes.contains(this))
+        if(containsreal(visitedNodes, this))
             return Type.UNKNOWN;
         visitedNodes.add(this);
         Type lType = lhs.getType(visitedNodes);
@@ -77,7 +77,7 @@ public class Operation extends Value {
 
     @Override
     public boolean containsReferenceTo(ConstantReference ref, List<ASTNode> vistedNodes) {
-        if(vistedNodes.contains(this))
+        if(containsreal(vistedNodes, this))
             return true;
         vistedNodes.add(this);
         return lhs.containsReferenceTo(ref) || rhs.containsReferenceTo(ref);
@@ -98,6 +98,26 @@ public class Operation extends Value {
         if(operator == Operator.DEV)
             return ((Calculateble) l).devide(r);
         return null;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Operation)) return false;
+
+        Operation operation = (Operation) o;
+
+        return operator == operation.operator
+                && lhs.equals(operation.lhs)
+                && rhs.equals(operation.rhs);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = operator.hashCode();
+        result = 31 * result + lhs.hashCode();
+        result = 31 * result + rhs.hashCode();
+        return result;
     }
 
     public enum Operator {

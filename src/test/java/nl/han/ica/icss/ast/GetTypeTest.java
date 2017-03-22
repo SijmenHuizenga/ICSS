@@ -16,11 +16,9 @@ import com.tngtech.java.junit.dataprovider.DataProvider;
 import com.tngtech.java.junit.dataprovider.DataProviderRunner;
 import com.tngtech.java.junit.dataprovider.UseDataProvider;
 import nl.han.ica.icss.astfactory.ConstantFactory;
-import nl.han.ica.icss.checker.errors.CircularReferenceError;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static nl.han.ica.icss.ast.Asserts.assertContainsType;
 import static org.junit.Assert.assertEquals;
 
 /**

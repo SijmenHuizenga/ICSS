@@ -20,6 +20,7 @@ import javafx.scene.control.TreeView;
 import javafx.scene.layout.BorderPane;
 import nl.han.ica.icss.ast.AST;
 import nl.han.ica.icss.ast.ASTNode;
+import nl.han.ica.icss.ast.Value;
 import nl.han.ica.icss.checker.errors.SemanticError;
 
 import javax.swing.*;
@@ -88,7 +89,7 @@ public class ASTPane extends BorderPane {
         tvNode.setExpanded(true);
 
         for (ASTNode child : astNode.getChildren()) {
-            if(nodesInTree.contains(child))
+            if(Value.containsreal(nodesInTree, child))
                 continue;
             tvNode.getChildren().add(astNodeToTreeItem(child, nodesInTree));
         }

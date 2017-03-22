@@ -11,5 +11,6 @@ a {
 }
 
 .menu {
-	color: 520px;
+	color: #000000;
 }
+

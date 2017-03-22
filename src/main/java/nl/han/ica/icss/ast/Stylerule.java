@@ -54,4 +54,23 @@ public class Stylerule extends ASTNode {
         selector.check();
         body.forEach(ASTNode::check);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Stylerule)) return false;
+
+        Stylerule stylerule = (Stylerule) o;
+
+        if (!selector.equals(stylerule.selector)) return false;
+        return !(body != null ? !body.equals(stylerule.body) : stylerule.body != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = selector.hashCode();
+        result = 31 * result + (body != null ? body.hashCode() : 0);
+        return result;
+    }
 }
